@@ -3,16 +3,19 @@
 //  DBSmartPanels
 //
 //  Created by Dave Blundell on 10/16/14.
-//    Copyright (c) 2014 David Blundell. All rights reserved.
+//  Copyright (c) 2014 David Blundell. All rights reserved.
 //
 
 #import "DBSmartPanels.h"
+#import "NSObject+ShutUpWarnings.h"
+#import "NSWindowController+IDEWorkspaceWindowController.h"
+#import "Aspects.h"
 
 static DBSmartPanels *sharedPlugin;
 
 @interface DBSmartPanels()
-
 @property (nonatomic, strong, readwrite) NSBundle *bundle;
+@property (nonatomic) BOOL shouldShowDebuggerWhenOpeningNextTextDocument;
 @end
 
 @implementation DBSmartPanels
@@ -39,30 +42,65 @@ static DBSmartPanels *sharedPlugin;
         // reference to plugin's bundle, for resource access
         self.bundle = plugin;
         
-        // Create menu items, initialize UI, etc.
-
-        // Sample Menu Item:
-        NSMenuItem *menuItem = [[NSApp mainMenu] itemWithTitle:@"Edit"];
-        if (menuItem) {
-            [[menuItem submenu] addItem:[NSMenuItem separatorItem]];
-            NSMenuItem *actionMenuItem = [[NSMenuItem alloc] initWithTitle:@"Do Action" action:@selector(doMenuAction) keyEquivalent:@""];
-            [actionMenuItem setTarget:self];
-            [[menuItem submenu] addItem:actionMenuItem];
-        }
+        [self performSelector:@selector(setupEventHandlers) withObject:nil afterDelay:5.0f];
     }
     return self;
 }
 
-// Sample Action, for menu item:
-- (void)doMenuAction
+- (void)setupEventHandlers
 {
-    NSAlert *alert = [NSAlert alertWithMessageText:@"Hello, World" defaultButton:nil alternateButton:nil otherButton:nil informativeTextWithFormat:@""];
-    [alert runModal];
+    [objc_getClass("DVTSourceTextView") aspect_hookSelector:@selector(didChangeText) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo) {
+        [self setDebuggerHidden:@YES utilitiesHidden:@YES switchToStandardEditor:NO];
+    } error:NULL];
+    
+    [objc_getClass("IDEEditorArea") aspect_hookSelector:@selector(_openEditorOpenSpecifier:editorContext:takeFocus:) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo) {
+        NSObject *editorArea = [aspectInfo instance];
+        NSObject *primaryEditorDocument = (NSObject *)[editorArea primaryEditorDocument];
+        NSURL *url = [primaryEditorDocument fileURL];
+        
+        [self setupUIForPrimaryEditorDocumentWithURL:url];
+    } error:NULL];
 }
 
-- (void)dealloc
+- (void)setupUIForPrimaryEditorDocumentWithURL:(NSURL *)url {
+    if ([url.absoluteString hasSuffix:@".xib"] || [url.absoluteString hasSuffix:@".storyboard"]) {
+        // if debugger is visible and we're auto-hiding it, we should restore it when we got back to a text document
+        self.shouldShowDebuggerWhenOpeningNextTextDocument = ![self isDebuggerHidden];
+        
+        [self setDebuggerHidden:@YES utilitiesHidden:@NO switchToStandardEditor:YES];
+    } else {
+        NSNumber *debuggerHidden = self.shouldShowDebuggerWhenOpeningNextTextDocument ? @NO : nil;
+        self.shouldShowDebuggerWhenOpeningNextTextDocument = NO;
+        
+        [self setDebuggerHidden:debuggerHidden utilitiesHidden:@YES switchToStandardEditor:NO];
+        
+        // TODO: restore Assistant Editor if applicable (-[IDEEditorArea _setEditorMode:])
+    }
+}
+
+- (BOOL)isDebuggerHidden {
+    //TODO: for now, assuming we only have one workspace...
+    for (NSWindowController *workspaceWindowController in [objc_getClass("IDEWorkspaceWindowController") workspaceWindowControllers]) {
+        return [workspaceWindowController isDebuggerHidden];
+    }
+    return YES;
+}
+
+- (void)setDebuggerHidden:(NSNumber *)debuggerHidden utilitiesHidden:(NSNumber *)utilitiesHidden switchToStandardEditor:(BOOL)standardEditor
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    for (NSWindowController *workspaceWindowController in [objc_getClass("IDEWorkspaceWindowController") workspaceWindowControllers]) {
+        if (debuggerHidden) {
+            [workspaceWindowController setDebuggerHidden:[debuggerHidden boolValue]];
+        }
+        
+        if (utilitiesHidden) {
+            [workspaceWindowController setUtilitiesHidden:[utilitiesHidden boolValue]];
+        }
+        
+        if (standardEditor) {
+            [workspaceWindowController changeToStandardEditor];
+        }
+    }
 }
 
 @end
