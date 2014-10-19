@@ -22,5 +22,6 @@
 - (NSArray *)workspaceWindowControllers;
 - (void)_setEditorMode:(int)arg1;
 - (NSURL *)fileURL;
+- (void)_openEditorOpenSpecifier:(id)arg1 editorContext:(id)arg2 takeFocus:(BOOL)arg3;
 
 @end
