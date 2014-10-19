@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6245"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="SPPreferencesWindowController">
+            <connections>
+                <outlet property="hideDebuggerWhenOpeningInterfaceFileButton" destination="htl-sW-WIM" id="mXS-Sw-Dpz"/>
+                <outlet property="hideDebuggerWhenTypingBeginsButton" destination="Koz-5r-2o7" id="OoX-xK-uHv"/>
+                <outlet property="hideUtilitiesWhenOpeningTextDocumentButton" destination="FDe-x5-9Jn" id="clD-CZ-ppp"/>
+                <outlet property="hideUtilitiesWhenTypingBeginsButton" destination="R7k-0s-2xl" id="GIZ-gG-Cxx"/>
+                <outlet property="restoreDebuggerWhenOpeningTextDocumentButton" destination="Pic-kt-XNh" id="PhI-Fh-b0y"/>
+                <outlet property="restoreEditorModeWhenOpeningTextDocumentButton" destination="1uI-AF-gcD" id="S3v-kl-Lby"/>
+                <outlet property="showUtilitiesWhenOpeningInterfaceFileButton" destination="BKy-pe-LLf" id="ngM-ks-jBq"/>
+                <outlet property="switchToStandardEditorModeWhenOpeningInterfaceFileButton" destination="4zx-kO-EQf" id="SPf-yb-Cos"/>
+                <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Smart Panels" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" visibleAtLaunch="NO" frameAutosaveName="DBSmartPanelPreferencesWindow" animationBehavior="default" id="F0z-JX-Cv5">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="240" width="436" height="268"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
+            <view key="contentView" id="se5-gp-TjO">
+                <rect key="frame" x="0.0" y="0.0" width="436" height="268"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Koz-5r-2o7">
+                        <rect key="frame" x="228" y="230" width="116" height="18"/>
+                        <buttonCell key="cell" type="check" title="Hide debugger" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="CSJ-ck-3Ec">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="hideDebuggerWhenTypingBeginsButtonValueChanged:" target="-2" id="kvd-tO-r9n"/>
+                        </connections>
+                    </button>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C13-zT-WpR">
+                        <rect key="frame" x="92" y="231" width="132" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="When typing begins:" id="fk3-pS-3ew">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R7k-0s-2xl">
+                        <rect key="frame" x="228" y="210" width="101" height="18"/>
+                        <buttonCell key="cell" type="check" title="Hide utilities" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Q0P-3j-alh">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="hideUtilitiesWhenTypingBeginsButton:" target="-2" id="Ram-2i-cwa"/>
+                        </connections>
+                    </button>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pic-kt-XNh">
+                        <rect key="frame" x="228" y="152" width="168" height="18"/>
+                        <buttonCell key="cell" type="check" title="Restore debugger state" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="yzt-fX-7NP">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="restoreDebuggerWhenOpeningTextDocumentButton:" target="-2" id="Obc-Aw-Wl6"/>
+                        </connections>
+                    </button>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xiu-aO-pm8">
+                        <rect key="frame" x="18" y="173" width="206" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="When opening a text document:" id="6za-d4-nct">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FDe-x5-9Jn">
+                        <rect key="frame" x="228" y="132" width="101" height="18"/>
+                        <buttonCell key="cell" type="check" title="Hide utilities" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="5YS-w0-21J">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="hideUtilitiesWhenOpeningTextDocumentButton:" target="-2" id="7mH-KP-nEy"/>
+                        </connections>
+                    </button>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1uI-AF-gcD">
+                        <rect key="frame" x="228" y="172" width="151" height="18"/>
+                        <buttonCell key="cell" type="check" title="Restore editor mode" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="gFD-Wv-xmC">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="restoreEditorModeWhenOpeningTextDocumentButton:" target="-2" id="TdO-Qm-inP"/>
+                        </connections>
+                    </button>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="htl-sW-WIM">
+                        <rect key="frame" x="228" y="74" width="116" height="18"/>
+                        <buttonCell key="cell" type="check" title="Hide debugger" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="n3y-ut-OV6">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="hideDebuggerWhenOpeningInterfaceFileButton:" target="-2" id="I80-Pq-3k2"/>
+                        </connections>
+                    </button>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gt4-94-wef">
+                        <rect key="frame" x="23" y="95" width="201" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="When opening an interface file:" id="I4H-9Z-5lQ">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x6n-2K-wbk">
+                        <rect key="frame" x="169" y="17" width="55" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Restore:" id="L56-CF-m5j">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BKy-pe-LLf">
+                        <rect key="frame" x="228" y="54" width="106" height="18"/>
+                        <buttonCell key="cell" type="check" title="Show utilities" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="77X-G1-v4l">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="showUtilitiesWhenOpeningInterfaceFileButton:" target="-2" id="ZQo-Aj-IPL"/>
+                        </connections>
+                    </button>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4zx-kO-EQf">
+                        <rect key="frame" x="228" y="94" width="180" height="18"/>
+                        <buttonCell key="cell" type="check" title="Switch to standard editor" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="PpZ-jb-Cf4">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="switchToStandardEditorModeWhenOpeningInterfaceFileButton:" target="-2" id="RJg-BR-oRa"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ubm-hr-rl7">
+                        <rect key="frame" x="224" y="7" width="143" height="32"/>
+                        <buttonCell key="cell" type="push" title="Restore Defaults" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lYA-qr-aQf">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="restoreDefaults:" target="-2" id="DKs-Xz-I71"/>
+                        </connections>
+                    </button>
+                </subviews>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
+            </connections>
+            <point key="canvasLocation" x="370" y="329"/>
+        </window>
+    </objects>
+</document>
