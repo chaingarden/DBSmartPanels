@@ -10,6 +10,7 @@
 #import "NSObject+ShutUpWarnings.h"
 #import "NSWindowController+IDEWorkspaceWindowController.h"
 #import "Aspects.h"
+#import <objc/objc-runtime.h>
 
 static DBSmartPanels *sharedPlugin;
 
