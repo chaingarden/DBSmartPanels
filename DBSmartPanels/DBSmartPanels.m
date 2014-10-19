@@ -7,7 +7,7 @@
 //
 
 #import "DBSmartPanels.h"
-#import "NSObject+ShutUpWarnings.h"
+#import "NSObject+XCRuntimeSupport.h"
 #import "NSWindowController+IDEWorkspaceWindowController.h"
 #import "Aspects.h"
 #import <objc/objc-runtime.h>
@@ -55,8 +55,8 @@ static DBSmartPanels *sharedPlugin;
     } error:NULL];
     
     [objc_getClass("IDEEditorArea") aspect_hookSelector:@selector(_openEditorOpenSpecifier:editorContext:takeFocus:) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo) {
-        NSObject *editorArea = [aspectInfo instance];
-        NSObject *primaryEditorDocument = (NSObject *)[editorArea primaryEditorDocument];
+        NSObject<IDEEditorArea> *editorArea = [aspectInfo instance];
+        NSObject<IDEEditorDocument> *primaryEditorDocument = (NSObject *)[editorArea primaryEditorDocument];
         NSURL *url = [primaryEditorDocument fileURL];
         
         [self setupUIForPrimaryEditorDocumentWithURL:url];

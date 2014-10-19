@@ -11,7 +11,6 @@
 		81F6BD5619F0C93700A2FFB8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81F6BD5519F0C93700A2FFB8 /* Foundation.framework */; };
 		81F6BD5B19F0C93700A2FFB8 /* DBSmartPanels.xcscheme in Resources */ = {isa = PBXBuildFile; fileRef = 81F6BD5A19F0C93700A2FFB8 /* DBSmartPanels.xcscheme */; };
 		81F6BD5E19F0C93700A2FFB8 /* DBSmartPanels.m in Sources */ = {isa = PBXBuildFile; fileRef = 81F6BD5D19F0C93700A2FFB8 /* DBSmartPanels.m */; };
-		81F6BD6D19F0C9B000A2FFB8 /* NSObject+ShutUpWarnings.m in Sources */ = {isa = PBXBuildFile; fileRef = 81F6BD6619F0C9B000A2FFB8 /* NSObject+ShutUpWarnings.m */; };
 		81F6BD6E19F0C9B000A2FFB8 /* NSWindowController+IDEWorkspaceWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81F6BD6819F0C9B000A2FFB8 /* NSWindowController+IDEWorkspaceWindowController.m */; };
 		81F6BD6F19F0C9B000A2FFB8 /* Aspects.m in Sources */ = {isa = PBXBuildFile; fileRef = 81F6BD6C19F0C9B000A2FFB8 /* Aspects.m */; };
 /* End PBXBuildFile section */
@@ -24,8 +23,7 @@
 		81F6BD5A19F0C93700A2FFB8 /* DBSmartPanels.xcscheme */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = DBSmartPanels.xcscheme; path = DBSmartPanels.xcodeproj/xcshareddata/xcschemes/DBSmartPanels.xcscheme; sourceTree = SOURCE_ROOT; };
 		81F6BD5C19F0C93700A2FFB8 /* DBSmartPanels.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBSmartPanels.h; sourceTree = "<group>"; };
 		81F6BD5D19F0C93700A2FFB8 /* DBSmartPanels.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBSmartPanels.m; sourceTree = "<group>"; };
-		81F6BD6519F0C9B000A2FFB8 /* NSObject+ShutUpWarnings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+ShutUpWarnings.h"; sourceTree = "<group>"; };
-		81F6BD6619F0C9B000A2FFB8 /* NSObject+ShutUpWarnings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ShutUpWarnings.m"; sourceTree = "<group>"; };
+		81F6BD6519F0C9B000A2FFB8 /* NSObject+XCRuntimeSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+XCRuntimeSupport.h"; sourceTree = "<group>"; };
 		81F6BD6719F0C9B000A2FFB8 /* NSWindowController+IDEWorkspaceWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSWindowController+IDEWorkspaceWindowController.h"; sourceTree = "<group>"; };
 		81F6BD6819F0C9B000A2FFB8 /* NSWindowController+IDEWorkspaceWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSWindowController+IDEWorkspaceWindowController.m"; sourceTree = "<group>"; };
 		81F6BD6B19F0C9B000A2FFB8 /* Aspects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Aspects.h; sourceTree = "<group>"; };
@@ -95,8 +93,7 @@
 		81F6BD6419F0C9B000A2FFB8 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				81F6BD6519F0C9B000A2FFB8 /* NSObject+ShutUpWarnings.h */,
-				81F6BD6619F0C9B000A2FFB8 /* NSObject+ShutUpWarnings.m */,
+				81F6BD6519F0C9B000A2FFB8 /* NSObject+XCRuntimeSupport.h */,
 				81F6BD6719F0C9B000A2FFB8 /* NSWindowController+IDEWorkspaceWindowController.h */,
 				81F6BD6819F0C9B000A2FFB8 /* NSWindowController+IDEWorkspaceWindowController.m */,
 			);
@@ -189,7 +186,6 @@
 			files = (
 				81F6BD5E19F0C93700A2FFB8 /* DBSmartPanels.m in Sources */,
 				81F6BD6E19F0C9B000A2FFB8 /* NSWindowController+IDEWorkspaceWindowController.m in Sources */,
-				81F6BD6D19F0C9B000A2FFB8 /* NSObject+ShutUpWarnings.m in Sources */,
 				81F6BD6F19F0C9B000A2FFB8 /* Aspects.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -313,6 +309,7 @@
 				81F6BD6319F0C93700A2FFB8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

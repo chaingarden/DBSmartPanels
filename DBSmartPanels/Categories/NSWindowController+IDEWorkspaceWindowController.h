@@ -7,8 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "NSObject+XCRuntimeSupport.h"
 
-@interface NSWindowController (IDEWorkspaceWindowController)
+@interface NSWindowController (IDEWorkspaceWindowController) <IDEWorkspaceWindowController>
 
 - (BOOL)isDebuggerHidden;
 - (void)setDebuggerHidden:(BOOL)hidden;
