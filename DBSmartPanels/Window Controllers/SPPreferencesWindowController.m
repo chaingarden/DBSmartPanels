@@ -54,48 +54,53 @@
 
 #pragma mark - Actions
 
-- (IBAction)hideDebuggerWhenTypingBeginsButtonValueChanged:(id)sender {
+- (IBAction)hideDebuggerWhenTypingBeginsButtonPressed:(id)sender {
     if (![sender isKindOfClass:[NSButton class]]) return;
     [SPPreferences sharedPreferences].hideDebuggerWhenTypingBegins = (((NSButton *)sender).state == NSOnState);
 }
 
-- (IBAction)hideUtilitiesWhenTypingBeginsButton:(id)sender {
+- (IBAction)hideUtilitiesWhenTypingBeginsButtonPressed:(id)sender {
     if (![sender isKindOfClass:[NSButton class]]) return;
     [SPPreferences sharedPreferences].hideUtilitiesWhenTypingBegins = (((NSButton *)sender).state == NSOnState);
 }
 
-- (IBAction)restoreEditorModeWhenOpeningTextDocumentButton:(id)sender {
+- (IBAction)restoreEditorModeWhenOpeningTextDocumentButtonPressed:(id)sender {
     if (![sender isKindOfClass:[NSButton class]]) return;
     [SPPreferences sharedPreferences].restoreEditorModeWhenOpeningTextDocument = (((NSButton *)sender).state == NSOnState);
 }
 
-- (IBAction)restoreDebuggerWhenOpeningTextDocumentButton:(id)sender {
+- (IBAction)restoreDebuggerWhenOpeningTextDocumentButtonPressed:(id)sender {
     if (![sender isKindOfClass:[NSButton class]]) return;
     [SPPreferences sharedPreferences].restoreDebuggerWhenOpeningTextDocument = (((NSButton *)sender).state == NSOnState);
 }
 
-- (IBAction)hideUtilitiesWhenOpeningTextDocumentButton:(id)sender {
+- (IBAction)hideUtilitiesWhenOpeningTextDocumentButtonPressed:(id)sender {
     if (![sender isKindOfClass:[NSButton class]]) return;
     [SPPreferences sharedPreferences].hideUtilitiesWhenOpeningTextDocument = (((NSButton *)sender).state == NSOnState);
 }
 
-- (IBAction)switchToStandardEditorModeWhenOpeningInterfaceFileButton:(id)sender {
+- (IBAction)switchToStandardEditorModeWhenOpeningInterfaceFileButtonPressed:(id)sender {
     if (![sender isKindOfClass:[NSButton class]]) return;
     [SPPreferences sharedPreferences].switchToStandardEditorModeWhenOpeningInterfaceFile = (((NSButton *)sender).state == NSOnState);
 }
 
-- (IBAction)hideDebuggerWhenOpeningInterfaceFileButton:(id)sender {
+- (IBAction)hideDebuggerWhenOpeningInterfaceFileButtonPressed:(id)sender {
     if (![sender isKindOfClass:[NSButton class]]) return;
     [SPPreferences sharedPreferences].hideDebuggerWhenOpeningInterfaceFile = (((NSButton *)sender).state == NSOnState);
 }
 
-- (IBAction)showUtilitiesWhenOpeningInterfaceFileButton:(id)sender {
+- (IBAction)showUtilitiesWhenOpeningInterfaceFileButtonPressed:(id)sender {
     if (![sender isKindOfClass:[NSButton class]]) return;
     [SPPreferences sharedPreferences].showUtilitiesWhenOpeningInterfaceFile = (((NSButton *)sender).state == NSOnState);
 }
 
-- (IBAction)restoreDefaults:(id)sender {
+- (IBAction)restorePluginDefaultsButtonPressed:(id)sender {
     [[SPPreferences sharedPreferences] restoreDefaults];
+    [self updateUI];
+}
+
+- (IBAction)restoreXcodeDefaultBehaviorButtonPressed:(id)sender {
+    [[SPPreferences sharedPreferences] restoreXcodeBehavior];
     [self updateUI];
 }
 

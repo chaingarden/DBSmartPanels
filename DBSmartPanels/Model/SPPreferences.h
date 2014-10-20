@@ -24,5 +24,6 @@
 + (SPPreferences *)sharedPreferences;
 
 - (void)restoreDefaults;
+- (void)restoreXcodeBehavior;
 
 @end

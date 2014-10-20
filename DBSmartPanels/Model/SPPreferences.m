@@ -65,24 +65,28 @@ BOOL_PROPERTY(showUtilitiesWhenOpeningInterfaceFile, kShowUtilitiesWhenOpeningIn
 #pragma mark - Loading and restoring
 
 - (void)loadProperties {
-    [self loadPropertiesForceDefaults:NO];
+    [self loadPropertiesForceDefaults:NO xcodeBehavior:NO];
 }
 
-- (void)loadPropertiesForceDefaults:(BOOL)forceDefaults {
-    LOAD_PROPERTY(hideDebuggerWhenTypingBegins, kHideDebuggerWhenTypingBeginsUserDefaultsKey, YES, forceDefaults);
-    LOAD_PROPERTY(hideUtilitiesWhenTypingBegins, kHideUtilitiesWhenTypingBeginsUserDefaultsKey, YES, forceDefaults);
+- (void)loadPropertiesForceDefaults:(BOOL)forceDefaults xcodeBehavior:(BOOL)defaultXcode {
+    LOAD_PROPERTY(hideDebuggerWhenTypingBegins, kHideDebuggerWhenTypingBeginsUserDefaultsKey, (YES && !defaultXcode), forceDefaults);
+    LOAD_PROPERTY(hideUtilitiesWhenTypingBegins, kHideUtilitiesWhenTypingBeginsUserDefaultsKey, (YES && !defaultXcode), forceDefaults);
     
-    LOAD_PROPERTY(restoreEditorModeWhenOpeningTextDocument, kRestoreEditorModeWhenOpeningTextDocumentUserDefaultsKey, YES, forceDefaults);
-    LOAD_PROPERTY(restoreDebuggerWhenOpeningTextDocument, kRestoreDebuggerWhenOpeningTextDocumentUserDefaultsKey, NO, forceDefaults);
-    LOAD_PROPERTY(hideUtilitiesWhenOpeningTextDocument, kHideUtilitiesWhenOpeningTextDocumentUserDefaultsKey, YES, forceDefaults);
+    LOAD_PROPERTY(restoreEditorModeWhenOpeningTextDocument, kRestoreEditorModeWhenOpeningTextDocumentUserDefaultsKey, (YES && !defaultXcode), forceDefaults);
+    LOAD_PROPERTY(restoreDebuggerWhenOpeningTextDocument, kRestoreDebuggerWhenOpeningTextDocumentUserDefaultsKey, (NO && !defaultXcode), forceDefaults);
+    LOAD_PROPERTY(hideUtilitiesWhenOpeningTextDocument, kHideUtilitiesWhenOpeningTextDocumentUserDefaultsKey, (YES && !defaultXcode), forceDefaults);
     
-    LOAD_PROPERTY(switchToStandardEditorModeWhenOpeningInterfaceFile, kSwitchToStandardEditorModeWhenOpeningInterfaceFileUserDefaultsKey, YES, forceDefaults);
-    LOAD_PROPERTY(hideDebuggerWhenOpeningInterfaceFile, kHideDebuggerWhenOpeningInterfaceFileUserDefaultsKey, YES, forceDefaults);
-    LOAD_PROPERTY(showUtilitiesWhenOpeningInterfaceFile, kShowUtilitiesWhenOpeningInterfaceFileUserDefaultsKey, YES, forceDefaults);
+    LOAD_PROPERTY(switchToStandardEditorModeWhenOpeningInterfaceFile, kSwitchToStandardEditorModeWhenOpeningInterfaceFileUserDefaultsKey, (YES && !defaultXcode), forceDefaults);
+    LOAD_PROPERTY(hideDebuggerWhenOpeningInterfaceFile, kHideDebuggerWhenOpeningInterfaceFileUserDefaultsKey, (YES && !defaultXcode), forceDefaults);
+    LOAD_PROPERTY(showUtilitiesWhenOpeningInterfaceFile, kShowUtilitiesWhenOpeningInterfaceFileUserDefaultsKey, (YES && !defaultXcode), forceDefaults);
 }
 
 - (void)restoreDefaults {
-    [self loadPropertiesForceDefaults:YES];
+    [self loadPropertiesForceDefaults:YES xcodeBehavior:NO];
+}
+
+- (void)restoreXcodeBehavior {
+    [self loadPropertiesForceDefaults:YES xcodeBehavior:YES];
 }
 
 @end
