@@ -29,14 +29,13 @@ Since one size does not necessarily fit all, the plugin installs a new option in
 Installation
 ------------
 
-I'll be submitting this plugin to Alcatraz for easy installation and will update these instructions if/when it's approved.
+The easiest way to install is via <a href="http://alcatraz.io">Alcatraz</a>.
 
-In the meantime, if you'd like to install manually, you can do so by following these steps:
+Alternatively, you can install manually by following these steps:
 
 1. Clone this repository.
 2. Open and run the project.
-
-That's it! When you run the project, it should start up a second instance of Xcode with the plugin installed. Try it out, and let me know what you think. Which brings me to my next point...
+3. Restart Xcode.
 
 Feedback
 --------
