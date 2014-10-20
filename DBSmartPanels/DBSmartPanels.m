@@ -3,7 +3,7 @@
 //  DBSmartPanels
 //
 //  Created by Dave Blundell on 10/16/14.
-//  Copyright (c) 2014 David Blundell. All rights reserved.
+//  Copyright (c) 2014 Dave Blundell. All rights reserved.
 //
 
 #import "DBSmartPanels.h"
@@ -52,13 +52,7 @@ static DBSmartPanels *sharedPlugin;
         self.bundle = plugin;
         
         // create menu item for preferences
-        NSMenuItem *xcodeMenuItem = [[NSApp mainMenu] itemWithTitle:@"Xcode"];
-        if (xcodeMenuItem) {
-            [[xcodeMenuItem submenu] addItem:[NSMenuItem separatorItem]];
-            NSMenuItem *preferencesMenuItem = [[NSMenuItem alloc] initWithTitle:@"Smart Panels…" action:@selector(showPreferences) keyEquivalent:@""];
-            [preferencesMenuItem setTarget:self];
-            [[xcodeMenuItem submenu] insertItem:preferencesMenuItem afterItemWithTitle:@"Preferences…"];
-        }
+        [self addPreferencesMenuItem];
         
         // setup event handlers after a delay
         [self performSelector:@selector(setupEventHandlers) withObject:nil afterDelay:5.0f];
@@ -66,10 +60,19 @@ static DBSmartPanels *sharedPlugin;
     return self;
 }
 
-#pragma mark - Swizzling setup
+#pragma mark - Setup
 
-- (void)setupEventHandlers
-{
+- (void)addPreferencesMenuItem {
+    NSMenuItem *xcodeMenuItem = [[NSApp mainMenu] itemWithTitle:@"Xcode"];
+    if (xcodeMenuItem) {
+        [[xcodeMenuItem submenu] addItem:[NSMenuItem separatorItem]];
+        NSMenuItem *preferencesMenuItem = [[NSMenuItem alloc] initWithTitle:@"Smart Panels…" action:@selector(showPreferences) keyEquivalent:@""];
+        [preferencesMenuItem setTarget:self];
+        [[xcodeMenuItem submenu] insertItem:preferencesMenuItem afterItemWithTitle:@"Preferences…"];
+    }
+}
+
+- (void)setupEventHandlers {
     [objc_getClass("DVTSourceTextView") aspect_hookSelector:@selector(didChangeText) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo) {
         [self handleTypingBegan];
     } error:NULL];
