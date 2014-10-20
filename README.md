@@ -4,20 +4,20 @@ DBSmartPanels
 About
 -----
 
-DBSmartPanels is a simple panel manager plugin for Xcode 6 which optimizes screen real estate usage by making common sense decisions on handling what's displayed in the editor window based on what you're currently doing. The point of this plugin is to get everything out of the way so you can focus only on what you need.
+DBSmartPanels is a simple panel manager plugin for Xcode 6 which optimizes screen real estate by making common sense decisions on handling what's displayed in the editor window based on what you're currently doing. The point of this plugin is to get everything out of the way so you can focus only on what you need.
 
-There are currently 3 events that the plugin is concerned with, and multiple behavior tweaks for each:
+There are currently 3 events with which the plugin is concerned, with multiple behavior tweaks for each:
 * <b>When you begin typing in a text document:</b>
-    * <b>Hide debugger</b>: hides the bottom panel
-    * <b>Hide utilities</b>: hides the right-hand panel
+    * <i>Hide debugger</i>: hides the bottom panel
+    * <i>Hide utilities</i>: hides the right-hand panel
 * <b>When you open a text document:</b>
-    * <b>Restore editor mode</b>: if applicable, switches you back to whichever editor mode you were in (Standard, Assistant, or Version Editor) before you opened an interface file
-    * <b>Restore debugger state</b>: if applicable, un-hides the debugger if it was visible before you opened an interface file
-    * <b>Hide utilities</b>: hides the right-hand panel
-* <b>When you open an interface file (XIB or Storyboard)
-    * <b>Switch to standard editor</b>: the Assistant Editor takes up valuable screen real estate, so hide it
-    * <b>Hide debugger</b>: hides the bottom panel
-    * <b>Show utilities</b>: shows the right-hand panel, since you generally tweak values in here when dealing with UI elements
+    * <i>Restore editor mode</i>: if applicable, switches you back to whichever editor mode you were in (Standard, Assistant, or Version Editor) before you opened an interface file
+    * <i>Restore debugger state</i>: if applicable, un-hides the debugger if it was visible before you opened an interface file
+    * <i>Hide utilities</i>: hides the right-hand panel
+* <b>When you open an interface file</b> (XIB or Storyboard)
+    * <i>Switch to standard editor</i>: the Assistant Editor takes up valuable screen real estate, so hide it
+    * <i>Hide debugger</i>: hides the bottom panel
+    * <i>Show utilities</i>: shows the right-hand panel, since you generally tweak values in here when dealing with UI elements
 
 Configuration
 -------------
