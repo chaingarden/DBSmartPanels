@@ -8,9 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum : NSUInteger {
+    SPIDEEditorModeStandard = 0,
+    SPIDEEditorModeAssistant = 1,
+    SPIDEEditorModeVersion = 2
+} SPIDEEditorMode;
+
 @protocol IDEEditorArea <NSObject>
 @property (readonly) id primaryEditorDocument;
 @property BOOL showDebuggerArea;
+@property(nonatomic) int editorMode;
 - (void)_openEditorOpenSpecifier:(id)arg1 editorContext:(id)arg2 takeFocus:(BOOL)arg3;
 - (void)_setEditorMode:(int)arg1;
 - (void)toggleDebuggerVisibility:(id)arg1;

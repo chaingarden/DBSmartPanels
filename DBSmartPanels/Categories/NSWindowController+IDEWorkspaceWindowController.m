@@ -30,9 +30,13 @@
     }
 }
 
-- (void)changeToStandardEditor {
-    NSObject<IDEWorkspaceTabController> *tabController = self.activeWorkspaceTabController;
-    [tabController changeToStandardEditor:nil];
+- (void)setEditorMode:(SPIDEEditorMode)editorMode {
+//    NSObject<IDEWorkspaceTabController> *tabController = self.activeWorkspaceTabController;
+//    [tabController changeToStandardEditor:nil];
+    NSObject<IDEEditorArea> *editorArea = self.editorArea;
+    if (editorArea.editorMode != editorMode) {
+        [editorArea _setEditorMode:editorMode];
+    }
 }
 
 @end

@@ -14,6 +14,6 @@
 - (BOOL)isDebuggerHidden;
 - (void)setDebuggerHidden:(BOOL)hidden;
 - (void)setUtilitiesHidden:(BOOL)hidden;
-- (void)changeToStandardEditor;
+- (void)setEditorMode:(SPIDEEditorMode)editorMode;
 
 @end
