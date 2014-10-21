@@ -14,6 +14,7 @@
 #import <objc/objc-runtime.h>
 #import "SPPreferencesWindowController.h"
 #import "SPPreferences.h"
+#import "NSDocument+Utilities.h"
 
 static DBSmartPanels *sharedPlugin;
 
@@ -80,14 +81,9 @@ static DBSmartPanels *sharedPlugin;
     
     [objc_getClass("IDEEditorArea") aspect_hookSelector:@selector(_openEditorOpenSpecifier:editorContext:takeFocus:) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo) {
         NSObject<IDEEditorArea> *editorArea = [aspectInfo instance];
-        NSObject<IDEEditorDocument> *primaryEditorDocument = [editorArea primaryEditorDocument];
-        NSURL *url = [primaryEditorDocument fileURL];
+        NSDocument *primaryEditorDocument = [editorArea primaryEditorDocument];
         
-        if ([url.absoluteString hasSuffix:@".xib"] || [url.absoluteString hasSuffix:@".storyboard"]) {
-            [self handleInterfaceFileOpenedEventForEditorArea:editorArea];
-        } else {
-            [self handleTextDocumentOpenedEvent];
-        }
+        [self handleDocumentOpenedEventForDocument:primaryEditorDocument editorArea:editorArea];
     } error:NULL];
 }
 
@@ -102,27 +98,35 @@ static DBSmartPanels *sharedPlugin;
 
 #pragma mark - Event handlers
 
-- (void)handleInterfaceFileOpenedEventForEditorArea:(NSObject<IDEEditorArea> *)editorArea {
-    // remember state for restoring when returning to a text document
-    self.debuggerWasVisibleBeforeOpeningInterfaceFile = ![self isDebuggerHidden];
-    self.editorModeBeforeOpeningInterfaceFile = @(editorArea.editorMode);
-    
-    NSNumber *debuggerHidden = [SPPreferences sharedPreferences].hideDebuggerWhenOpeningInterfaceFile ? @YES : nil;
-    NSNumber *utilitiesHidden = [SPPreferences sharedPreferences].showUtilitiesWhenOpeningInterfaceFile ? @NO : nil;
-    NSNumber *editorMode = [SPPreferences sharedPreferences].switchToStandardEditorModeWhenOpeningInterfaceFile ? @(SPIDEEditorModeStandard) : nil;
-    
-    [self setEditorMode:editorMode debuggerHidden:debuggerHidden utilitiesHidden:utilitiesHidden];
-}
-
-- (void)handleTextDocumentOpenedEvent {
-    NSNumber *debuggerHidden = ([SPPreferences sharedPreferences].restoreDebuggerWhenOpeningTextDocument && self.debuggerWasVisibleBeforeOpeningInterfaceFile) ? @NO : nil;
-    NSNumber *utilitiesHidden = [SPPreferences sharedPreferences].hideUtilitiesWhenOpeningTextDocument ? @YES : nil;
-    NSNumber *editorMode = [SPPreferences sharedPreferences].restoreEditorModeWhenOpeningTextDocument ? self.editorModeBeforeOpeningInterfaceFile : nil;
-    
-    [self setEditorMode:editorMode debuggerHidden:debuggerHidden utilitiesHidden:utilitiesHidden];
-    
-    self.debuggerWasVisibleBeforeOpeningInterfaceFile = NO;
-    self.editorModeBeforeOpeningInterfaceFile = nil;
+- (void)handleDocumentOpenedEventForDocument:(NSDocument *)document editorArea:(NSObject<IDEEditorArea> *)editorArea {
+    switch (document.documentType) {
+        case SPDocumentTypeInterface: {
+            // remember state for restoring when returning to a text document
+            self.debuggerWasVisibleBeforeOpeningInterfaceFile = ![self isDebuggerHidden];
+            self.editorModeBeforeOpeningInterfaceFile = @(editorArea.editorMode);
+            
+            NSNumber *debuggerHidden = [SPPreferences sharedPreferences].hideDebuggerWhenOpeningInterfaceFile ? @YES : nil;
+            NSNumber *utilitiesHidden = [SPPreferences sharedPreferences].showUtilitiesWhenOpeningInterfaceFile ? @NO : nil;
+            NSNumber *editorMode = [SPPreferences sharedPreferences].switchToStandardEditorModeWhenOpeningInterfaceFile ? @(SPIDEEditorModeStandard) : nil;
+            
+            [self setEditorMode:editorMode debuggerHidden:debuggerHidden utilitiesHidden:utilitiesHidden];
+            break;
+        }
+            
+        case SPDocumentTypeText: {
+            NSNumber *debuggerHidden = ([SPPreferences sharedPreferences].restoreDebuggerWhenOpeningTextDocument && self.debuggerWasVisibleBeforeOpeningInterfaceFile) ? @NO : nil;
+            NSNumber *utilitiesHidden = [SPPreferences sharedPreferences].hideUtilitiesWhenOpeningTextDocument ? @YES : nil;
+            NSNumber *editorMode = [SPPreferences sharedPreferences].restoreEditorModeWhenOpeningTextDocument ? self.editorModeBeforeOpeningInterfaceFile : nil;
+            
+            [self setEditorMode:editorMode debuggerHidden:debuggerHidden utilitiesHidden:utilitiesHidden];
+            
+            self.debuggerWasVisibleBeforeOpeningInterfaceFile = NO;
+            self.editorModeBeforeOpeningInterfaceFile = nil;
+        }
+            
+        default:
+            break;
+    }
 }
 
 - (void)handleTypingBegan {

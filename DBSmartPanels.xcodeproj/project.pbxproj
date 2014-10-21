@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8105AA8F19F4593B008C7482 /* NSMenu+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 8105AA8E19F4593B008C7482 /* NSMenu+Utilities.m */; };
+		8151715E19F6BA2D0012D4B7 /* NSDocument+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 8151715D19F6BA2D0012D4B7 /* NSDocument+Utilities.m */; };
 		8197B49E19F45D5C0051FEEC /* SPPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8197B49C19F45D5C0051FEEC /* SPPreferencesWindowController.m */; };
 		8197B49F19F45D5C0051FEEC /* SPPreferencesWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8197B49D19F45D5C0051FEEC /* SPPreferencesWindowController.xib */; };
 		8197B4A219F45D8F0051FEEC /* SPPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 8197B4A119F45D8F0051FEEC /* SPPreferences.m */; };
@@ -23,6 +24,8 @@
 		8105AA8D19F4593B008C7482 /* NSMenu+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMenu+Utilities.h"; sourceTree = "<group>"; };
 		8105AA8E19F4593B008C7482 /* NSMenu+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMenu+Utilities.m"; sourceTree = "<group>"; };
 		8105AA9119F45956008C7482 /* NSObject+XCRuntimeSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+XCRuntimeSupport.h"; sourceTree = "<group>"; };
+		8151715C19F6BA2D0012D4B7 /* NSDocument+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDocument+Utilities.h"; sourceTree = "<group>"; };
+		8151715D19F6BA2D0012D4B7 /* NSDocument+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDocument+Utilities.m"; sourceTree = "<group>"; };
 		8197B49B19F45D5C0051FEEC /* SPPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPPreferencesWindowController.h; sourceTree = "<group>"; };
 		8197B49C19F45D5C0051FEEC /* SPPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPPreferencesWindowController.m; sourceTree = "<group>"; };
 		8197B49D19F45D5C0051FEEC /* SPPreferencesWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPPreferencesWindowController.xib; sourceTree = "<group>"; };
@@ -134,6 +137,8 @@
 			isa = PBXGroup;
 			children = (
 				8105AA9019F45956008C7482 /* Xcode Runtime Support */,
+				8151715C19F6BA2D0012D4B7 /* NSDocument+Utilities.h */,
+				8151715D19F6BA2D0012D4B7 /* NSDocument+Utilities.m */,
 				8105AA8D19F4593B008C7482 /* NSMenu+Utilities.h */,
 				8105AA8E19F4593B008C7482 /* NSMenu+Utilities.m */,
 				81F6BD6719F0C9B000A2FFB8 /* NSWindowController+IDEWorkspaceWindowController.h */,
@@ -228,6 +233,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				81F6BD5E19F0C93700A2FFB8 /* DBSmartPanels.m in Sources */,
+				8151715E19F6BA2D0012D4B7 /* NSDocument+Utilities.m in Sources */,
 				8197B4A219F45D8F0051FEEC /* SPPreferences.m in Sources */,
 				81F6BD6E19F0C9B000A2FFB8 /* NSWindowController+IDEWorkspaceWindowController.m in Sources */,
 				8197B49E19F45D5C0051FEEC /* SPPreferencesWindowController.m in Sources */,

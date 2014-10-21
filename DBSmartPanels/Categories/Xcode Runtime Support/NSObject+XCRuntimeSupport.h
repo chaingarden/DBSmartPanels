@@ -23,10 +23,6 @@ typedef enum : NSUInteger {
 - (void)toggleDebuggerVisibility:(id)arg1;
 @end
 
-@protocol IDEEditorDocument <NSObject>
-- (NSURL *)fileURL;
-@end
-
 @protocol IDEWorkspaceTabController <NSObject>
 @property (readonly) id editorArea;
 - (void)changeToStandardEditor:(id)arg1;
