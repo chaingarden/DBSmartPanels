@@ -29,7 +29,7 @@ Since one size does not necessarily fit all, the plugin installs a new option in
 Installation
 ------------
 
-The easiest way to install is via <a href="http://alcatraz.io">Alcatraz</a>.
+The easiest way to install is via <a href="http://alcatraz.io">Alcatraz</a>. Once installed, restart Xcode.
 
 Alternatively, you can install manually by following these steps:
 
