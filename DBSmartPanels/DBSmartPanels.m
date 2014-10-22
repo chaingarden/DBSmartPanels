@@ -15,6 +15,7 @@
 #import "SPPreferencesWindowController.h"
 #import "SPPreferences.h"
 #import "NSDocument+Utilities.h"
+#import "NSTextView+DVTSourceTextView.h"
 
 static DBSmartPanels *sharedPlugin;
 
@@ -83,8 +84,12 @@ static DBSmartPanels *sharedPlugin;
 - (void)setupEventHandlers {
 	@try {
 		[objc_getClass("DVTSourceTextView") aspect_hookSelector:@selector(didChangeText) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo) {
-			@try {
-				[self handleTypingBegan];
+			@try { 
+				NSTextView *sourceTextView = [aspectInfo instance];
+				
+				if (![sourceTextView isInPopupWindow]) {
+					[self handleTypingBegan];
+				}
 			}
 			@catch (NSException *exception) {
 				[self logException:exception];
