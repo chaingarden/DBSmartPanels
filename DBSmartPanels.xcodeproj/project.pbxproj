@@ -91,7 +91,9 @@
 				81F6BD5219F0C93700A2FFB8 /* Frameworks */,
 				81F6BD5119F0C93700A2FFB8 /* Products */,
 			);
+			indentWidth = 4;
 			sourceTree = "<group>";
+			tabWidth = 4;
 		};
 		81F6BD5119F0C93700A2FFB8 /* Products */ = {
 			isa = PBXGroup;
