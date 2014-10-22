@@ -49,16 +49,22 @@ static DBSmartPanels *sharedPlugin;
 
 - (id)initWithBundle:(NSBundle *)plugin
 {
-    if (self = [super init]) {
-        // reference to plugin's bundle, for resource access
-        self.bundle = plugin;
-        
-        // create menu item for preferences
-        [self addPreferencesMenuItem];
-        
-        // setup event handlers after a delay
-        [self performSelector:@selector(setupEventHandlers) withObject:nil afterDelay:5.0f];
-    }
+	@try {
+		if (self = [super init]) {
+			// reference to plugin's bundle, for resource access
+			self.bundle = plugin;
+			
+			// create menu item for preferences
+			[self addPreferencesMenuItem];
+			
+			// setup event handlers after a delay
+			[self performSelector:@selector(setupEventHandlers) withObject:nil afterDelay:5.0f];
+		}
+	}
+	@catch (NSException *exception) {
+		self = nil;
+	}
+	
     return self;
 }
 
@@ -75,16 +81,35 @@ static DBSmartPanels *sharedPlugin;
 }
 
 - (void)setupEventHandlers {
-    [objc_getClass("DVTSourceTextView") aspect_hookSelector:@selector(didChangeText) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo) {
-        [self handleTypingBegan];
-    } error:NULL];
-    
-    [objc_getClass("IDEEditorArea") aspect_hookSelector:@selector(_openEditorOpenSpecifier:editorContext:takeFocus:) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo) {
-        NSObject<IDEEditorArea> *editorArea = [aspectInfo instance];
-        NSDocument *primaryEditorDocument = [editorArea primaryEditorDocument];
-        
-        [self handleDocumentOpenedEventForDocument:primaryEditorDocument editorArea:editorArea];
-    } error:NULL];
+	@try {
+		[objc_getClass("DVTSourceTextView") aspect_hookSelector:@selector(didChangeText) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo) {
+			@try {
+				[self handleTypingBegan];
+			}
+			@catch (NSException *exception) {
+				[self logException:exception];
+			}
+		} error:NULL];
+		
+		[objc_getClass("IDEEditorArea") aspect_hookSelector:@selector(_openEditorOpenSpecifier:editorContext:takeFocus:) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo) {
+			@try {
+				NSObject<IDEEditorArea> *editorArea = [aspectInfo instance];
+				NSDocument *primaryEditorDocument = [editorArea primaryEditorDocument];
+				
+				[self handleDocumentOpenedEventForDocument:primaryEditorDocument editorArea:editorArea];
+			}
+			@catch (NSException *exception) {
+				[self logException:exception];
+			}
+		} error:NULL];
+	}
+	@catch (NSException *exception) {
+		[self logException:exception];
+	}
+}
+
+- (void)logException:(NSException *)exception {
+	NSLog(@"Exception in DBSmartPanels: %@ - %@\nCall stack:\n%@", [exception name], [exception reason], [NSThread callStackSymbols]);
 }
 
 #pragma mark - Actions
