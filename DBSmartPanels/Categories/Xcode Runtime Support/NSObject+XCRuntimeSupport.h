@@ -19,6 +19,7 @@ typedef enum : NSUInteger {
 @property BOOL showDebuggerArea;
 @property(nonatomic) int editorMode;
 - (void)_openEditorOpenSpecifier:(id)arg1 editorContext:(id)arg2 takeFocus:(BOOL)arg3;
+- (void)_openEditorHistoryItem:(id)arg1 editorContext:(id)arg2 takeFocus:(BOOL)arg3;
 - (void)_setEditorMode:(int)arg1;
 - (void)toggleDebuggerVisibility:(id)arg1;
 @end

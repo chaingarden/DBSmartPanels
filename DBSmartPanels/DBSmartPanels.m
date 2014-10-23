@@ -82,35 +82,45 @@ static DBSmartPanels *sharedPlugin;
 }
 
 - (void)setupEventHandlers {
-	@try {
-		[objc_getClass("DVTSourceTextView") aspect_hookSelector:@selector(didChangeText) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo) {
-			@try { 
-				NSTextView *sourceTextView = [aspectInfo instance];
-				
-				if (![sourceTextView isInPopupWindow]) {
-					[self handleTypingBegan];
-				}
-			}
-			@catch (NSException *exception) {
-				[self logException:exception];
-			}
-		} error:NULL];
-		
-		[objc_getClass("IDEEditorArea") aspect_hookSelector:@selector(_openEditorOpenSpecifier:editorContext:takeFocus:) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo) {
-			@try {
-				NSObject<IDEEditorArea> *editorArea = [aspectInfo instance];
-				NSDocument *primaryEditorDocument = [editorArea primaryEditorDocument];
-				
-				[self handleDocumentOpenedEventForDocument:primaryEditorDocument editorArea:editorArea];
-			}
-			@catch (NSException *exception) {
-				[self logException:exception];
-			}
-		} error:NULL];
-	}
-	@catch (NSException *exception) {
-		[self logException:exception];
-	}
+    @try {
+        [objc_getClass("DVTSourceTextView") aspect_hookSelector:@selector(didChangeText) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo) {
+            @try {
+                NSTextView *sourceTextView = [aspectInfo instance];
+                
+                if (![sourceTextView isInPopupWindow]) {
+                    [self handleTypingBegan];
+                }
+            }
+            @catch (NSException *exception) {
+                [self logException:exception];
+            }
+        } error:NULL];
+        
+        [objc_getClass("IDEEditorArea") aspect_hookSelector:@selector(_openEditorOpenSpecifier:editorContext:takeFocus:) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo) {
+            @try {
+                NSObject<IDEEditorArea> *editorArea = [aspectInfo instance];
+                
+                [self handleDocumentOpenedEventForEditorArea:editorArea];
+            }
+            @catch (NSException *exception) {
+                [self logException:exception];
+            }
+        } error:NULL];
+        
+        [objc_getClass("IDEEditorArea") aspect_hookSelector:@selector(_openEditorHistoryItem:editorContext:takeFocus:) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo) {
+            @try {
+                NSObject<IDEEditorArea> *editorArea = [aspectInfo instance];
+                
+                [self handleDocumentOpenedEventForEditorArea:editorArea];
+            }
+            @catch (NSException *exception) {
+                [self logException:exception];
+            }
+        } error:NULL];
+    }
+    @catch (NSException *exception) {
+        [self logException:exception];
+    }
 }
 
 - (void)logException:(NSException *)exception {
@@ -128,7 +138,9 @@ static DBSmartPanels *sharedPlugin;
 
 #pragma mark - Event handlers
 
-- (void)handleDocumentOpenedEventForDocument:(NSDocument *)document editorArea:(NSObject<IDEEditorArea> *)editorArea {
+- (void)handleDocumentOpenedEventForEditorArea:(NSObject<IDEEditorArea> *)editorArea {
+    NSDocument *document = [editorArea primaryEditorDocument];
+    
     switch (document.documentType) {
         case SPDocumentTypeInterface: {
             // remember state for restoring when returning to a text document
