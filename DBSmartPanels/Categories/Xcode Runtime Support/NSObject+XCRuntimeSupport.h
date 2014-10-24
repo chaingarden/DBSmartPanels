@@ -27,8 +27,10 @@ typedef enum : NSUInteger {
 @protocol IDEWorkspaceTabController <NSObject>
 @property (readonly) id editorArea;
 - (void)changeToStandardEditor:(id)arg1;
+- (id)debugSessionController;
 - (BOOL)isUtilitiesAreaVisible;
 - (void)toggleUtilitiesVisibility:(id)arg1;
+- (void)_updateForDebuggingKVOChange;
 @end
 
 @protocol IDEWorkspaceWindowController <NSObject>

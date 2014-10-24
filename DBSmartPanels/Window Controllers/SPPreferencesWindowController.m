@@ -11,6 +11,8 @@
 
 @interface SPPreferencesWindowController ()
 
+@property (nonatomic, strong) IBOutlet NSButton *dontHideDebuggerWhileDebuggingButton;
+
 @property (nonatomic, strong) IBOutlet NSButton *hideDebuggerWhenTypingBeginsButton;
 @property (nonatomic, strong) IBOutlet NSButton *hideUtilitiesWhenTypingBeginsButton;
 
@@ -40,6 +42,8 @@
 - (void)updateUI {
     SPPreferences *sharedPrefs = [SPPreferences sharedPreferences];
     
+    self.dontHideDebuggerWhileDebuggingButton.state = sharedPrefs.dontHideDebuggerWhileDebugging ? NSOnState : NSOffState;
+    
     self.hideDebuggerWhenTypingBeginsButton.state = sharedPrefs.hideDebuggerWhenTypingBegins ? NSOnState : NSOffState;
     self.hideUtilitiesWhenTypingBeginsButton.state = sharedPrefs.hideUtilitiesWhenTypingBegins ? NSOnState : NSOffState;
     
@@ -53,6 +57,11 @@
 }
 
 #pragma mark - Actions
+
+- (IBAction)dontHideDebuggerWhileDebuggingButtonPressed:(id)sender {
+    if (![sender isKindOfClass:[NSButton class]]) return;
+    [SPPreferences sharedPreferences].dontHideDebuggerWhileDebugging = (((NSButton *)sender).state == NSOnState);
+}
 
 - (IBAction)hideDebuggerWhenTypingBeginsButtonPressed:(id)sender {
     if (![sender isKindOfClass:[NSButton class]]) return;

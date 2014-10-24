@@ -23,6 +23,7 @@ static DBSmartPanels *sharedPlugin;
 @property (nonatomic, strong, readwrite) NSBundle *bundle;
 @property (nonatomic) BOOL debuggerWasVisibleBeforeOpeningInterfaceFile;
 @property (nonatomic, strong) NSNumber *editorModeBeforeOpeningInterfaceFile;
+@property (nonatomic) BOOL isDebugging;
 @property (nonatomic, strong) SPPreferencesWindowController *preferencesWindowController;
 @end
 
@@ -117,6 +118,18 @@ static DBSmartPanels *sharedPlugin;
                 [self logException:exception];
             }
         } error:NULL];
+        
+        [objc_getClass("IDEWorkspaceTabController") aspect_hookSelector:@selector(_updateForDebuggingKVOChange) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo) {
+            @try {
+                NSObject<IDEWorkspaceTabController> *tabController = [aspectInfo instance];
+                NSObject *debugSessionController = [tabController debugSessionController];
+                
+                self.isDebugging = (debugSessionController != nil);
+            }
+            @catch (NSException *exception) {
+                [self logException:exception];
+            }
+        } error:NULL];
     }
     @catch (NSException *exception) {
         [self logException:exception];
@@ -147,7 +160,7 @@ static DBSmartPanels *sharedPlugin;
             self.debuggerWasVisibleBeforeOpeningInterfaceFile = ![self isDebuggerHidden];
             self.editorModeBeforeOpeningInterfaceFile = @(editorArea.editorMode);
             
-            NSNumber *debuggerHidden = [SPPreferences sharedPreferences].hideDebuggerWhenOpeningInterfaceFile ? @YES : nil;
+            NSNumber *debuggerHidden = ([self canHideDebugger] && [SPPreferences sharedPreferences].hideDebuggerWhenOpeningInterfaceFile) ? @YES : nil;
             NSNumber *utilitiesHidden = [SPPreferences sharedPreferences].showUtilitiesWhenOpeningInterfaceFile ? @NO : nil;
             NSNumber *editorMode = [SPPreferences sharedPreferences].switchToStandardEditorModeWhenOpeningInterfaceFile ? @(SPIDEEditorModeStandard) : nil;
             
@@ -172,13 +185,17 @@ static DBSmartPanels *sharedPlugin;
 }
 
 - (void)handleTypingBegan {
-    NSNumber *debuggerHidden = [SPPreferences sharedPreferences].hideDebuggerWhenTypingBegins ? @YES : nil;
+    NSNumber *debuggerHidden = ([self canHideDebugger] && [SPPreferences sharedPreferences].hideDebuggerWhenTypingBegins) ? @YES : nil;
     NSNumber *utilitiesHidden = [SPPreferences sharedPreferences].hideUtilitiesWhenTypingBegins ? @YES : nil;
     
     [self setEditorMode:nil debuggerHidden:debuggerHidden utilitiesHidden:utilitiesHidden];
 }
 
 #pragma mark - Helper methods
+
+- (BOOL)canHideDebugger {
+    return (!self.isDebugging || ![SPPreferences sharedPreferences].dontHideDebuggerWhileDebugging);
+}
 
 - (BOOL)isDebuggerHidden {
     //TODO: for now, assuming we only have one workspace...

@@ -10,6 +10,8 @@
 
 @interface SPPreferences : NSObject
 
+@property (nonatomic) BOOL dontHideDebuggerWhileDebugging;
+
 @property (nonatomic) BOOL hideDebuggerWhenTypingBegins;
 @property (nonatomic) BOOL hideUtilitiesWhenTypingBegins;
 

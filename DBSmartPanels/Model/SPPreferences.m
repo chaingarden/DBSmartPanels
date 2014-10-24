@@ -8,6 +8,8 @@
 
 #import "SPPreferences.h"
 
+#define kDontHideDebuggerWhileDebuggingUserDefaultsKey @"dontHideDebuggerWhileDebugging"
+
 #define kHideDebuggerWhenTypingBeginsUserDefaultsKey @"hideDebuggerWhenTypingBegins"
 #define kHideUtilitiesWhenTypingBeginsUserDefaultsKey @"hideUtilitiesWhenTypingBegins"
 
@@ -51,6 +53,8 @@ static SPPreferences *sPreferences = nil;
 
 #pragma mark - Getters & setters
 
+BOOL_PROPERTY(dontHideDebuggerWhileDebugging, kDontHideDebuggerWhileDebuggingUserDefaultsKey, setDontHideDebuggerWhileDebugging)
+
 BOOL_PROPERTY(hideDebuggerWhenTypingBegins, kHideDebuggerWhenTypingBeginsUserDefaultsKey, setHideDebuggerWhenTypingBegins)
 BOOL_PROPERTY(hideUtilitiesWhenTypingBegins, kHideUtilitiesWhenTypingBeginsUserDefaultsKey, setHideUtilitiesWhenTypingBegins)
 
@@ -68,17 +72,19 @@ BOOL_PROPERTY(showUtilitiesWhenOpeningInterfaceFile, kShowUtilitiesWhenOpeningIn
     [self loadPropertiesForceDefaults:NO xcodeBehavior:NO];
 }
 
-- (void)loadPropertiesForceDefaults:(BOOL)forceDefaults xcodeBehavior:(BOOL)defaultXcode {
-    LOAD_PROPERTY(hideDebuggerWhenTypingBegins, kHideDebuggerWhenTypingBeginsUserDefaultsKey, (YES && !defaultXcode), forceDefaults);
-    LOAD_PROPERTY(hideUtilitiesWhenTypingBegins, kHideUtilitiesWhenTypingBeginsUserDefaultsKey, (YES && !defaultXcode), forceDefaults);
+- (void)loadPropertiesForceDefaults:(BOOL)forceDefaults xcodeBehavior:(BOOL)xcodeBehavior {
+    LOAD_PROPERTY(dontHideDebuggerWhileDebugging, kDontHideDebuggerWhileDebuggingUserDefaultsKey, (YES && !xcodeBehavior), forceDefaults);
     
-    LOAD_PROPERTY(restoreEditorModeWhenOpeningTextDocument, kRestoreEditorModeWhenOpeningTextDocumentUserDefaultsKey, (YES && !defaultXcode), forceDefaults);
-    LOAD_PROPERTY(restoreDebuggerWhenOpeningTextDocument, kRestoreDebuggerWhenOpeningTextDocumentUserDefaultsKey, (NO && !defaultXcode), forceDefaults);
-    LOAD_PROPERTY(hideUtilitiesWhenOpeningTextDocument, kHideUtilitiesWhenOpeningTextDocumentUserDefaultsKey, (YES && !defaultXcode), forceDefaults);
+    LOAD_PROPERTY(hideDebuggerWhenTypingBegins, kHideDebuggerWhenTypingBeginsUserDefaultsKey, (YES && !xcodeBehavior), forceDefaults);
+    LOAD_PROPERTY(hideUtilitiesWhenTypingBegins, kHideUtilitiesWhenTypingBeginsUserDefaultsKey, (YES && !xcodeBehavior), forceDefaults);
     
-    LOAD_PROPERTY(switchToStandardEditorModeWhenOpeningInterfaceFile, kSwitchToStandardEditorModeWhenOpeningInterfaceFileUserDefaultsKey, (YES && !defaultXcode), forceDefaults);
-    LOAD_PROPERTY(hideDebuggerWhenOpeningInterfaceFile, kHideDebuggerWhenOpeningInterfaceFileUserDefaultsKey, (YES && !defaultXcode), forceDefaults);
-    LOAD_PROPERTY(showUtilitiesWhenOpeningInterfaceFile, kShowUtilitiesWhenOpeningInterfaceFileUserDefaultsKey, (YES && !defaultXcode), forceDefaults);
+    LOAD_PROPERTY(restoreEditorModeWhenOpeningTextDocument, kRestoreEditorModeWhenOpeningTextDocumentUserDefaultsKey, (YES && !xcodeBehavior), forceDefaults);
+    LOAD_PROPERTY(restoreDebuggerWhenOpeningTextDocument, kRestoreDebuggerWhenOpeningTextDocumentUserDefaultsKey, (NO && !xcodeBehavior), forceDefaults);
+    LOAD_PROPERTY(hideUtilitiesWhenOpeningTextDocument, kHideUtilitiesWhenOpeningTextDocumentUserDefaultsKey, (YES && !xcodeBehavior), forceDefaults);
+    
+    LOAD_PROPERTY(switchToStandardEditorModeWhenOpeningInterfaceFile, kSwitchToStandardEditorModeWhenOpeningInterfaceFileUserDefaultsKey, (YES && !xcodeBehavior), forceDefaults);
+    LOAD_PROPERTY(hideDebuggerWhenOpeningInterfaceFile, kHideDebuggerWhenOpeningInterfaceFileUserDefaultsKey, (YES && !xcodeBehavior), forceDefaults);
+    LOAD_PROPERTY(showUtilitiesWhenOpeningInterfaceFile, kShowUtilitiesWhenOpeningInterfaceFileUserDefaultsKey, (YES && !xcodeBehavior), forceDefaults);
 }
 
 - (void)restoreDefaults {
