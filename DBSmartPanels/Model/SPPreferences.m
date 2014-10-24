@@ -8,9 +8,8 @@
 
 #import "SPPreferences.h"
 
-#define kDontHideDebuggerWhileDebuggingUserDefaultsKey @"dontHideDebuggerWhileDebugging"
-
 #define kHideDebuggerWhenTypingBeginsUserDefaultsKey @"hideDebuggerWhenTypingBegins"
+#define kDontHideDebuggerWhileDebuggingWhenTypingBeginsUserDefaultsKey @"dontHideDebuggerWhileDebuggingWhenTypingBegins"
 #define kHideUtilitiesWhenTypingBeginsUserDefaultsKey @"hideUtilitiesWhenTypingBegins"
 
 #define kRestoreEditorModeWhenOpeningTextDocumentUserDefaultsKey @"restoreEditorModeWhenOpeningTextDocument"
@@ -19,6 +18,7 @@
 
 #define kSwitchToStandardEditorModeWhenOpeningInterfaceFileUserDefaultsKey @"switchToStandardEditorModeWhenOpeningInterfaceFile"
 #define kHideDebuggerWhenOpeningInterfaceFileUserDefaultsKey @"hideDebuggerWhenOpeningInterfaceFile"
+#define kDontHideDebuggerWhileDebuggingWhenOpeningInterfaceFileUserDefaultsKey @"dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFile"
 #define kShowUtilitiesWhenOpeningInterfaceFileUserDefaultsKey @"showUtilitiesWhenOpeningInterfaceFile"
 
 #define LOAD_PROPERTY(NAME, KEY, DEFAULT_VALUE, FORCE_DEFAULT) \
@@ -53,9 +53,8 @@ static SPPreferences *sPreferences = nil;
 
 #pragma mark - Getters & setters
 
-BOOL_PROPERTY(dontHideDebuggerWhileDebugging, kDontHideDebuggerWhileDebuggingUserDefaultsKey, setDontHideDebuggerWhileDebugging)
-
 BOOL_PROPERTY(hideDebuggerWhenTypingBegins, kHideDebuggerWhenTypingBeginsUserDefaultsKey, setHideDebuggerWhenTypingBegins)
+BOOL_PROPERTY(dontHideDebuggerWhileDebuggingWhenTypingBegins, kDontHideDebuggerWhileDebuggingWhenTypingBeginsUserDefaultsKey, setDontHideDebuggerWhileDebuggingWhenTypingBegins)
 BOOL_PROPERTY(hideUtilitiesWhenTypingBegins, kHideUtilitiesWhenTypingBeginsUserDefaultsKey, setHideUtilitiesWhenTypingBegins)
 
 BOOL_PROPERTY(restoreEditorModeWhenOpeningTextDocument, kRestoreEditorModeWhenOpeningTextDocumentUserDefaultsKey, setRestoreEditorModeWhenOpeningTextDocument)
@@ -64,6 +63,7 @@ BOOL_PROPERTY(hideUtilitiesWhenOpeningTextDocument, kHideUtilitiesWhenOpeningTex
 
 BOOL_PROPERTY(switchToStandardEditorModeWhenOpeningInterfaceFile, kSwitchToStandardEditorModeWhenOpeningInterfaceFileUserDefaultsKey, setSwitchToStandardEditorModeWhenOpeningInterfaceFile)
 BOOL_PROPERTY(hideDebuggerWhenOpeningInterfaceFile, kHideDebuggerWhenOpeningInterfaceFileUserDefaultsKey, setHideDebuggerWhenOpeningInterfaceFile)
+BOOL_PROPERTY(dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFile, kDontHideDebuggerWhileDebuggingWhenOpeningInterfaceFileUserDefaultsKey, setDontHideDebuggerWhileDebuggingWhenOpeningInterfaceFile)
 BOOL_PROPERTY(showUtilitiesWhenOpeningInterfaceFile, kShowUtilitiesWhenOpeningInterfaceFileUserDefaultsKey, setShowUtilitiesWhenOpeningInterfaceFile)
 
 #pragma mark - Loading and restoring
@@ -73,9 +73,8 @@ BOOL_PROPERTY(showUtilitiesWhenOpeningInterfaceFile, kShowUtilitiesWhenOpeningIn
 }
 
 - (void)loadPropertiesForceDefaults:(BOOL)forceDefaults xcodeBehavior:(BOOL)xcodeBehavior {
-    LOAD_PROPERTY(dontHideDebuggerWhileDebugging, kDontHideDebuggerWhileDebuggingUserDefaultsKey, (YES && !xcodeBehavior), forceDefaults);
-    
     LOAD_PROPERTY(hideDebuggerWhenTypingBegins, kHideDebuggerWhenTypingBeginsUserDefaultsKey, (YES && !xcodeBehavior), forceDefaults);
+	LOAD_PROPERTY(dontHideDebuggerWhileDebuggingWhenTypingBegins, kDontHideDebuggerWhileDebuggingWhenTypingBeginsUserDefaultsKey, (YES && !xcodeBehavior), forceDefaults);
     LOAD_PROPERTY(hideUtilitiesWhenTypingBegins, kHideUtilitiesWhenTypingBeginsUserDefaultsKey, (YES && !xcodeBehavior), forceDefaults);
     
     LOAD_PROPERTY(restoreEditorModeWhenOpeningTextDocument, kRestoreEditorModeWhenOpeningTextDocumentUserDefaultsKey, (YES && !xcodeBehavior), forceDefaults);
@@ -84,6 +83,7 @@ BOOL_PROPERTY(showUtilitiesWhenOpeningInterfaceFile, kShowUtilitiesWhenOpeningIn
     
     LOAD_PROPERTY(switchToStandardEditorModeWhenOpeningInterfaceFile, kSwitchToStandardEditorModeWhenOpeningInterfaceFileUserDefaultsKey, (YES && !xcodeBehavior), forceDefaults);
     LOAD_PROPERTY(hideDebuggerWhenOpeningInterfaceFile, kHideDebuggerWhenOpeningInterfaceFileUserDefaultsKey, (YES && !xcodeBehavior), forceDefaults);
+	LOAD_PROPERTY(dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFile, kDontHideDebuggerWhileDebuggingWhenOpeningInterfaceFileUserDefaultsKey, (NO && !xcodeBehavior), forceDefaults);
     LOAD_PROPERTY(showUtilitiesWhenOpeningInterfaceFile, kShowUtilitiesWhenOpeningInterfaceFileUserDefaultsKey, (YES && !xcodeBehavior), forceDefaults);
 }
 

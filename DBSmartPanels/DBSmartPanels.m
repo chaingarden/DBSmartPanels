@@ -164,8 +164,9 @@ static DBSmartPanels *sharedPlugin;
             // remember state for restoring when returning to a text document
             self.debuggerWasVisibleBeforeOpeningInterfaceFile = ![windowController isDebuggerHidden];
             self.editorModeBeforeOpeningInterfaceFile = @(editorArea.editorMode);
-            
-            NSNumber *debuggerHidden = ([self canHideDebugger] && [SPPreferences sharedPreferences].hideDebuggerWhenOpeningInterfaceFile) ? @YES : nil;
+			
+			BOOL canHideDebugger = [self canHideDebuggerWhenOpeningInterfaceFile];
+            NSNumber *debuggerHidden = (canHideDebugger && [SPPreferences sharedPreferences].hideDebuggerWhenOpeningInterfaceFile) ? @YES : nil;
             NSNumber *utilitiesHidden = [SPPreferences sharedPreferences].showUtilitiesWhenOpeningInterfaceFile ? @NO : nil;
             NSNumber *editorMode = [SPPreferences sharedPreferences].switchToStandardEditorModeWhenOpeningInterfaceFile ? @(SPIDEEditorModeStandard) : nil;
             
@@ -196,7 +197,8 @@ static DBSmartPanels *sharedPlugin;
 		return;
 	}
 	
-	NSNumber *debuggerHidden = ([self canHideDebugger] && [SPPreferences sharedPreferences].hideDebuggerWhenTypingBegins) ? @YES : nil;
+	BOOL canHideDebugger = [self canHideDebuggerWhenTypingBegins];
+	NSNumber *debuggerHidden = (canHideDebugger && [SPPreferences sharedPreferences].hideDebuggerWhenTypingBegins) ? @YES : nil;
     NSNumber *utilitiesHidden = [SPPreferences sharedPreferences].hideUtilitiesWhenTypingBegins ? @YES : nil;
     
     [windowController setEditorMode:nil debuggerHidden:debuggerHidden utilitiesHidden:utilitiesHidden];
@@ -204,8 +206,12 @@ static DBSmartPanels *sharedPlugin;
 
 #pragma mark - Helper methods
 
-- (BOOL)canHideDebugger {
-    return (!self.isDebugging || ![SPPreferences sharedPreferences].dontHideDebuggerWhileDebugging);
+- (BOOL)canHideDebuggerWhenOpeningInterfaceFile {
+	return (!self.isDebugging || ![SPPreferences sharedPreferences].dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFile);
+}
+
+- (BOOL)canHideDebuggerWhenTypingBegins {
+	return (!self.isDebugging || ![SPPreferences sharedPreferences].dontHideDebuggerWhileDebuggingWhenTypingBegins);
 }
 
 @end

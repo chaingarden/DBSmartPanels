@@ -99,8 +99,6 @@ static NSCache *sourceTextViewToWindowControllerCache;
 }
 
 - (void)setEditorMode:(SPIDEEditorMode)editorMode {
-//    NSObject<IDEWorkspaceTabController> *tabController = self.activeWorkspaceTabController;
-//    [tabController changeToStandardEditor:nil];
     NSViewController<IDEEditorArea> *editorArea = self.editorArea;
     if (editorArea.editorMode != editorMode) {
         [editorArea _setEditorMode:editorMode];

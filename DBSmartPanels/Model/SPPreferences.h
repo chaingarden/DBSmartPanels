@@ -10,9 +10,8 @@
 
 @interface SPPreferences : NSObject
 
-@property (nonatomic) BOOL dontHideDebuggerWhileDebugging;
-
 @property (nonatomic) BOOL hideDebuggerWhenTypingBegins;
+@property (nonatomic) BOOL dontHideDebuggerWhileDebuggingWhenTypingBegins;
 @property (nonatomic) BOOL hideUtilitiesWhenTypingBegins;
 
 @property (nonatomic) BOOL restoreEditorModeWhenOpeningTextDocument;
@@ -21,6 +20,7 @@
 
 @property (nonatomic) BOOL switchToStandardEditorModeWhenOpeningInterfaceFile;
 @property (nonatomic) BOOL hideDebuggerWhenOpeningInterfaceFile;
+@property (nonatomic) BOOL dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFile;
 @property (nonatomic) BOOL showUtilitiesWhenOpeningInterfaceFile;
 
 + (SPPreferences *)sharedPreferences;

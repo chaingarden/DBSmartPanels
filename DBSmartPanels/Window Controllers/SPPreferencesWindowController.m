@@ -11,9 +11,8 @@
 
 @interface SPPreferencesWindowController ()
 
-@property (nonatomic, strong) IBOutlet NSButton *dontHideDebuggerWhileDebuggingButton;
-
 @property (nonatomic, strong) IBOutlet NSButton *hideDebuggerWhenTypingBeginsButton;
+@property (nonatomic, strong) IBOutlet NSButton *dontHideDebuggerWhileDebuggingWhenTypingBeginsButton;
 @property (nonatomic, strong) IBOutlet NSButton *hideUtilitiesWhenTypingBeginsButton;
 
 @property (nonatomic, strong) IBOutlet NSButton *restoreEditorModeWhenOpeningTextDocumentButton;
@@ -22,6 +21,7 @@
 
 @property (nonatomic, strong) IBOutlet NSButton *switchToStandardEditorModeWhenOpeningInterfaceFileButton;
 @property (nonatomic, strong) IBOutlet NSButton *hideDebuggerWhenOpeningInterfaceFileButton;
+@property (nonatomic, strong) IBOutlet NSButton *dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFileButton;
 @property (nonatomic, strong) IBOutlet NSButton *showUtilitiesWhenOpeningInterfaceFileButton;
 
 @end
@@ -42,9 +42,8 @@
 - (void)updateUI {
     SPPreferences *sharedPrefs = [SPPreferences sharedPreferences];
     
-    self.dontHideDebuggerWhileDebuggingButton.state = sharedPrefs.dontHideDebuggerWhileDebugging ? NSOnState : NSOffState;
-    
     self.hideDebuggerWhenTypingBeginsButton.state = sharedPrefs.hideDebuggerWhenTypingBegins ? NSOnState : NSOffState;
+	self.dontHideDebuggerWhileDebuggingWhenTypingBeginsButton.state = sharedPrefs.dontHideDebuggerWhileDebuggingWhenTypingBegins ? NSOnState : NSOffState;
     self.hideUtilitiesWhenTypingBeginsButton.state = sharedPrefs.hideUtilitiesWhenTypingBegins ? NSOnState : NSOffState;
     
     self.restoreEditorModeWhenOpeningTextDocumentButton.state = sharedPrefs.restoreEditorModeWhenOpeningTextDocument ? NSOnState : NSOffState;
@@ -53,19 +52,25 @@
     
     self.switchToStandardEditorModeWhenOpeningInterfaceFileButton.state = sharedPrefs.switchToStandardEditorModeWhenOpeningInterfaceFile ? NSOnState : NSOffState;
     self.hideDebuggerWhenOpeningInterfaceFileButton.state = sharedPrefs.hideDebuggerWhenOpeningInterfaceFile ? NSOnState : NSOffState;
+	self.dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFileButton.state = sharedPrefs.dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFile ? NSOnState : NSOffState;
     self.showUtilitiesWhenOpeningInterfaceFileButton.state = sharedPrefs.showUtilitiesWhenOpeningInterfaceFile ? NSOnState : NSOffState;
+	
+	self.dontHideDebuggerWhileDebuggingWhenTypingBeginsButton.enabled = sharedPrefs.hideDebuggerWhenTypingBegins;
+	self.dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFileButton.enabled = sharedPrefs.hideDebuggerWhenOpeningInterfaceFile;
 }
 
 #pragma mark - Actions
 
-- (IBAction)dontHideDebuggerWhileDebuggingButtonPressed:(id)sender {
-    if (![sender isKindOfClass:[NSButton class]]) return;
-    [SPPreferences sharedPreferences].dontHideDebuggerWhileDebugging = (((NSButton *)sender).state == NSOnState);
-}
-
 - (IBAction)hideDebuggerWhenTypingBeginsButtonPressed:(id)sender {
     if (![sender isKindOfClass:[NSButton class]]) return;
     [SPPreferences sharedPreferences].hideDebuggerWhenTypingBegins = (((NSButton *)sender).state == NSOnState);
+	
+	self.dontHideDebuggerWhileDebuggingWhenTypingBeginsButton.enabled = [SPPreferences sharedPreferences].hideDebuggerWhenTypingBegins;
+}
+
+- (IBAction)dontHideDebuggerWhileDebuggingWhenTypingBeginsButtonPressed:(id)sender {
+	if (![sender isKindOfClass:[NSButton class]]) return;
+	[SPPreferences sharedPreferences].dontHideDebuggerWhileDebuggingWhenTypingBegins = (((NSButton *)sender).state == NSOnState);
 }
 
 - (IBAction)hideUtilitiesWhenTypingBeginsButtonPressed:(id)sender {
@@ -96,6 +101,13 @@
 - (IBAction)hideDebuggerWhenOpeningInterfaceFileButtonPressed:(id)sender {
     if (![sender isKindOfClass:[NSButton class]]) return;
     [SPPreferences sharedPreferences].hideDebuggerWhenOpeningInterfaceFile = (((NSButton *)sender).state == NSOnState);
+	
+	self.dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFileButton.enabled = [SPPreferences sharedPreferences].hideDebuggerWhenOpeningInterfaceFile;
+}
+
+- (IBAction)dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFileButtonPressed:(id)sender {
+	if (![sender isKindOfClass:[NSButton class]]) return;
+	[SPPreferences sharedPreferences].dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFile = (((NSButton *)sender).state == NSOnState);
 }
 
 - (IBAction)showUtilitiesWhenOpeningInterfaceFileButtonPressed:(id)sender {
