@@ -11,9 +11,10 @@
 
 @interface NSWindowController (IDEWorkspaceWindowController) <IDEWorkspaceWindowController>
 
++ (NSWindowController *)windowControllerContainingEditorArea:(NSViewController<IDEEditorArea> *)editorArea;
++ (NSWindowController *)windowControllerContainingSourceTextView:(NSTextView *)sourceTextView;
+
+- (void)setEditorMode:(NSNumber *)editorMode debuggerHidden:(NSNumber *)debuggerHidden utilitiesHidden:(NSNumber *)utilitiesHidden;
 - (BOOL)isDebuggerHidden;
-- (void)setDebuggerHidden:(BOOL)hidden;
-- (void)setUtilitiesHidden:(BOOL)hidden;
-- (void)setEditorMode:(SPIDEEditorMode)editorMode;
 
 @end

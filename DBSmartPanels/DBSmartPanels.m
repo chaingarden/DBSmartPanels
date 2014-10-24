@@ -89,7 +89,7 @@ static DBSmartPanels *sharedPlugin;
                 NSTextView *sourceTextView = [aspectInfo instance];
                 
                 if (![sourceTextView isInPopupWindow]) {
-                    [self handleTypingBegan];
+                    [self handleTypingBeganInSourceTextView:sourceTextView];
                 }
             }
             @catch (NSException *exception) {
@@ -99,7 +99,7 @@ static DBSmartPanels *sharedPlugin;
         
         [objc_getClass("IDEEditorArea") aspect_hookSelector:@selector(_openEditorOpenSpecifier:editorContext:takeFocus:) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo) {
             @try {
-                NSObject<IDEEditorArea> *editorArea = [aspectInfo instance];
+                NSViewController<IDEEditorArea> *editorArea = [aspectInfo instance];
                 
                 [self handleDocumentOpenedEventForEditorArea:editorArea];
             }
@@ -110,7 +110,7 @@ static DBSmartPanels *sharedPlugin;
         
         [objc_getClass("IDEEditorArea") aspect_hookSelector:@selector(_openEditorHistoryItem:editorContext:takeFocus:) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo) {
             @try {
-                NSObject<IDEEditorArea> *editorArea = [aspectInfo instance];
+                NSViewController<IDEEditorArea> *editorArea = [aspectInfo instance];
                 
                 [self handleDocumentOpenedEventForEditorArea:editorArea];
             }
@@ -151,20 +151,25 @@ static DBSmartPanels *sharedPlugin;
 
 #pragma mark - Event handlers
 
-- (void)handleDocumentOpenedEventForEditorArea:(NSObject<IDEEditorArea> *)editorArea {
-    NSDocument *document = [editorArea primaryEditorDocument];
-    
+- (void)handleDocumentOpenedEventForEditorArea:(NSViewController<IDEEditorArea> *)editorArea {
+	NSWindowController<IDEWorkspaceWindowController> *windowController = [NSWindowController windowControllerContainingEditorArea:editorArea];
+	NSDocument *document = [editorArea primaryEditorDocument];
+	
+	if (!windowController || !document) {
+		return;
+	}
+	
     switch (document.documentType) {
         case SPDocumentTypeInterface: {
             // remember state for restoring when returning to a text document
-            self.debuggerWasVisibleBeforeOpeningInterfaceFile = ![self isDebuggerHidden];
+            self.debuggerWasVisibleBeforeOpeningInterfaceFile = ![windowController isDebuggerHidden];
             self.editorModeBeforeOpeningInterfaceFile = @(editorArea.editorMode);
             
             NSNumber *debuggerHidden = ([self canHideDebugger] && [SPPreferences sharedPreferences].hideDebuggerWhenOpeningInterfaceFile) ? @YES : nil;
             NSNumber *utilitiesHidden = [SPPreferences sharedPreferences].showUtilitiesWhenOpeningInterfaceFile ? @NO : nil;
             NSNumber *editorMode = [SPPreferences sharedPreferences].switchToStandardEditorModeWhenOpeningInterfaceFile ? @(SPIDEEditorModeStandard) : nil;
             
-            [self setEditorMode:editorMode debuggerHidden:debuggerHidden utilitiesHidden:utilitiesHidden];
+            [windowController setEditorMode:editorMode debuggerHidden:debuggerHidden utilitiesHidden:utilitiesHidden];
             break;
         }
             
@@ -173,7 +178,7 @@ static DBSmartPanels *sharedPlugin;
             NSNumber *utilitiesHidden = [SPPreferences sharedPreferences].hideUtilitiesWhenOpeningTextDocument ? @YES : nil;
             NSNumber *editorMode = [SPPreferences sharedPreferences].restoreEditorModeWhenOpeningTextDocument ? self.editorModeBeforeOpeningInterfaceFile : nil;
             
-            [self setEditorMode:editorMode debuggerHidden:debuggerHidden utilitiesHidden:utilitiesHidden];
+            [windowController setEditorMode:editorMode debuggerHidden:debuggerHidden utilitiesHidden:utilitiesHidden];
             
             self.debuggerWasVisibleBeforeOpeningInterfaceFile = NO;
             self.editorModeBeforeOpeningInterfaceFile = nil;
@@ -184,42 +189,23 @@ static DBSmartPanels *sharedPlugin;
     }
 }
 
-- (void)handleTypingBegan {
-    NSNumber *debuggerHidden = ([self canHideDebugger] && [SPPreferences sharedPreferences].hideDebuggerWhenTypingBegins) ? @YES : nil;
+- (void)handleTypingBeganInSourceTextView:(NSTextView *)textView {
+	NSWindowController<IDEWorkspaceWindowController> *windowController = [NSWindowController windowControllerContainingSourceTextView:textView];
+	
+	if (!windowController) {
+		return;
+	}
+	
+	NSNumber *debuggerHidden = ([self canHideDebugger] && [SPPreferences sharedPreferences].hideDebuggerWhenTypingBegins) ? @YES : nil;
     NSNumber *utilitiesHidden = [SPPreferences sharedPreferences].hideUtilitiesWhenTypingBegins ? @YES : nil;
     
-    [self setEditorMode:nil debuggerHidden:debuggerHidden utilitiesHidden:utilitiesHidden];
+    [windowController setEditorMode:nil debuggerHidden:debuggerHidden utilitiesHidden:utilitiesHidden];
 }
 
 #pragma mark - Helper methods
 
 - (BOOL)canHideDebugger {
     return (!self.isDebugging || ![SPPreferences sharedPreferences].dontHideDebuggerWhileDebugging);
-}
-
-- (BOOL)isDebuggerHidden {
-    //TODO: for now, assuming we only have one workspace...
-    for (NSWindowController *workspaceWindowController in [objc_getClass("IDEWorkspaceWindowController") workspaceWindowControllers]) {
-        return [workspaceWindowController isDebuggerHidden];
-    }
-    return YES;
-}
-
-- (void)setEditorMode:(NSNumber *)editorMode debuggerHidden:(NSNumber *)debuggerHidden utilitiesHidden:(NSNumber *)utilitiesHidden
-{
-    for (NSWindowController *workspaceWindowController in [objc_getClass("IDEWorkspaceWindowController") workspaceWindowControllers]) {
-        if (editorMode) {
-            [workspaceWindowController setEditorMode:[editorMode integerValue]];
-        }
-        
-        if (debuggerHidden) {
-            [workspaceWindowController setDebuggerHidden:[debuggerHidden boolValue]];
-        }
-        
-        if (utilitiesHidden) {
-            [workspaceWindowController setUtilitiesHidden:[utilitiesHidden boolValue]];
-        }
-    }
 }
 
 @end

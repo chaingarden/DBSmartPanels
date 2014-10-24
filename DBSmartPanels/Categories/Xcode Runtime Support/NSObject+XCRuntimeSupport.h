@@ -18,6 +18,7 @@ typedef enum : NSUInteger {
 @property (readonly) id primaryEditorDocument;
 @property BOOL showDebuggerArea;
 @property(nonatomic) int editorMode;
+@property(retain) NSViewController *editorModeViewController;
 - (void)_openEditorOpenSpecifier:(id)arg1 editorContext:(id)arg2 takeFocus:(BOOL)arg3;
 - (void)_openEditorHistoryItem:(id)arg1 editorContext:(id)arg2 takeFocus:(BOOL)arg3;
 - (void)_setEditorMode:(int)arg1;
