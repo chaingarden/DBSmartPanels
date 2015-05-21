@@ -56,8 +56,8 @@ static DBSmartPanels *sharedPlugin;
 			// reference to plugin's bundle, for resource access
 			self.bundle = plugin;
 			
-			// create menu item for preferences
-			[self addPreferencesMenuItem];
+			// create menu item for preferences (use a delay since [NSApp mainMenu] returns nil if called right away)
+			[self performSelector:@selector(addPreferencesMenuItem) withObject:nil afterDelay:1.0f];
 			
 			// setup event handlers after a delay
 			[self performSelector:@selector(setupEventHandlers) withObject:nil afterDelay:5.0f];
