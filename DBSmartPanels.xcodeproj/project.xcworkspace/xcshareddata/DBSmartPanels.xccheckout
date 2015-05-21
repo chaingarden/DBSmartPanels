@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>BEDE0CBD-AC99-4679-9558-FC9FAB04B1E0</string>
 	<key>IDESourceControlProjectName</key>
-	<string>DBSmartPanels</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>F3781333EFB78B64FDE1E43E76320C8E4E8C3D97</key>
 		<string>https://github.com/chaingarden/DBSmartPanels.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>DBSmartPanels.xcodeproj</string>
+	<string>DBSmartPanels.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>F3781333EFB78B64FDE1E43E76320C8E4E8C3D97</key>
