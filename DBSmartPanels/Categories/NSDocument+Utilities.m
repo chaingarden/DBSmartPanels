@@ -8,7 +8,7 @@
 
 #import "NSDocument+Utilities.h"
 
-#define kTextDocumentFileExtensions @[@"h", @"m", @"c", @"cpp", @"txt", @"rtf"]
+#define kTextDocumentFileExtensions @[@"h", @"m", @"c", @"swift", @"cpp", @"txt", @"rtf"]
 #define kInterfaceDocumentFileExtensions @[@"xib", @"storyboard"]
 
 @implementation NSDocument (Utilities)
