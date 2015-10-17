@@ -167,10 +167,11 @@ static DBSmartPanels *sharedPlugin;
 			
 			BOOL canHideDebugger = [self canHideDebuggerWhenOpeningInterfaceFile];
             NSNumber *debuggerHidden = (canHideDebugger && [SPPreferences sharedPreferences].hideDebuggerWhenOpeningInterfaceFile) ? @YES : nil;
-            NSNumber *utilitiesHidden = [SPPreferences sharedPreferences].showUtilitiesWhenOpeningInterfaceFile ? @NO : nil;
+			NSNumber *navigatorHidden = [SPPreferences sharedPreferences].hideNavigatorWhenOpeningInterfaceFile ? @YES : nil;
+			NSNumber *utilitiesHidden = [SPPreferences sharedPreferences].showUtilitiesWhenOpeningInterfaceFile ? @NO : nil;
             NSNumber *editorMode = [SPPreferences sharedPreferences].switchToStandardEditorModeWhenOpeningInterfaceFile ? @(SPIDEEditorModeStandard) : nil;
             
-            [windowController setEditorMode:editorMode debuggerHidden:debuggerHidden navigatorHidden:nil utilitiesHidden:utilitiesHidden];
+            [windowController setEditorMode:editorMode debuggerHidden:debuggerHidden navigatorHidden:navigatorHidden utilitiesHidden:utilitiesHidden];
             break;
         }
             

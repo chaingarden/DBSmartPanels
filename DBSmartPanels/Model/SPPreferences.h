@@ -23,6 +23,7 @@
 @property (nonatomic) BOOL switchToStandardEditorModeWhenOpeningInterfaceFile;
 @property (nonatomic) BOOL hideDebuggerWhenOpeningInterfaceFile;
 @property (nonatomic) BOOL dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFile;
+@property (nonatomic) BOOL hideNavigatorWhenOpeningInterfaceFile;
 @property (nonatomic) BOOL showUtilitiesWhenOpeningInterfaceFile;
 
 + (SPPreferences *)sharedPreferences;

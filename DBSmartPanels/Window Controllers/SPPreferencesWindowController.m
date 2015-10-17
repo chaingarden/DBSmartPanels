@@ -24,6 +24,7 @@
 @property (nonatomic, strong) IBOutlet NSButton *switchToStandardEditorModeWhenOpeningInterfaceFileButton;
 @property (nonatomic, strong) IBOutlet NSButton *hideDebuggerWhenOpeningInterfaceFileButton;
 @property (nonatomic, strong) IBOutlet NSButton *dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFileButton;
+@property (nonatomic, strong) IBOutlet NSButton *hideNavigatorWhenOpeningInterfaceFileButton;
 @property (nonatomic, strong) IBOutlet NSButton *showUtilitiesWhenOpeningInterfaceFileButton;
 
 @end
@@ -55,7 +56,7 @@
 	self.hideUtilitiesWhenOpeningTextDocumentButton.state = sharedPrefs.hideUtilitiesWhenOpeningTextDocument ? NSOnState : NSOffState;
     
     self.switchToStandardEditorModeWhenOpeningInterfaceFileButton.state = sharedPrefs.switchToStandardEditorModeWhenOpeningInterfaceFile ? NSOnState : NSOffState;
-    self.hideDebuggerWhenOpeningInterfaceFileButton.state = sharedPrefs.hideDebuggerWhenOpeningInterfaceFile ? NSOnState : NSOffState;
+    self.hideNavigatorWhenOpeningInterfaceFileButton.state = sharedPrefs.hideNavigatorWhenOpeningInterfaceFile ? NSOnState : NSOffState;
 	self.dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFileButton.state = sharedPrefs.dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFile ? NSOnState : NSOffState;
     self.showUtilitiesWhenOpeningInterfaceFileButton.state = sharedPrefs.showUtilitiesWhenOpeningInterfaceFile ? NSOnState : NSOffState;
 	
@@ -122,6 +123,11 @@
 - (IBAction)dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFileButtonPressed:(id)sender {
 	if (![sender isKindOfClass:[NSButton class]]) return;
 	[SPPreferences sharedPreferences].dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFile = (((NSButton *)sender).state == NSOnState);
+}
+
+- (IBAction)hideNavigatorWhenOpeningInterfaceFileButtonPressed:(id)sender {
+	if (![sender isKindOfClass:[NSButton class]]) return;
+	[SPPreferences sharedPreferences].hideNavigatorWhenOpeningInterfaceFile = (((NSButton *)sender).state == NSOnState);
 }
 
 - (IBAction)showUtilitiesWhenOpeningInterfaceFileButtonPressed:(id)sender {

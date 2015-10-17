@@ -21,6 +21,7 @@
 #define kSwitchToStandardEditorModeWhenOpeningInterfaceFileUserDefaultsKey @"switchToStandardEditorModeWhenOpeningInterfaceFile"
 #define kHideDebuggerWhenOpeningInterfaceFileUserDefaultsKey @"hideDebuggerWhenOpeningInterfaceFile"
 #define kDontHideDebuggerWhileDebuggingWhenOpeningInterfaceFileUserDefaultsKey @"dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFile"
+#define kHideNavigatorWhenOpeningInterfaceFileUserDefaultsKey @"hideNavigatorWhenOpeningInterfaceFile"
 #define kShowUtilitiesWhenOpeningInterfaceFileUserDefaultsKey @"showUtilitiesWhenOpeningInterfaceFile"
 
 #define LOAD_PROPERTY(NAME, KEY, DEFAULT_VALUE, FORCE_DEFAULT) \
@@ -68,6 +69,7 @@ BOOL_PROPERTY(hideUtilitiesWhenOpeningTextDocument, kHideUtilitiesWhenOpeningTex
 BOOL_PROPERTY(switchToStandardEditorModeWhenOpeningInterfaceFile, kSwitchToStandardEditorModeWhenOpeningInterfaceFileUserDefaultsKey, setSwitchToStandardEditorModeWhenOpeningInterfaceFile)
 BOOL_PROPERTY(hideDebuggerWhenOpeningInterfaceFile, kHideDebuggerWhenOpeningInterfaceFileUserDefaultsKey, setHideDebuggerWhenOpeningInterfaceFile)
 BOOL_PROPERTY(dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFile, kDontHideDebuggerWhileDebuggingWhenOpeningInterfaceFileUserDefaultsKey, setDontHideDebuggerWhileDebuggingWhenOpeningInterfaceFile)
+BOOL_PROPERTY(hideNavigatorWhenOpeningInterfaceFile, kHideNavigatorWhenOpeningInterfaceFileUserDefaultsKey, setHideNavigatorWhenOpeningInterfaceFile)
 BOOL_PROPERTY(showUtilitiesWhenOpeningInterfaceFile, kShowUtilitiesWhenOpeningInterfaceFileUserDefaultsKey, setShowUtilitiesWhenOpeningInterfaceFile)
 
 #pragma mark - Loading and restoring
@@ -90,6 +92,7 @@ BOOL_PROPERTY(showUtilitiesWhenOpeningInterfaceFile, kShowUtilitiesWhenOpeningIn
     LOAD_PROPERTY(switchToStandardEditorModeWhenOpeningInterfaceFile, kSwitchToStandardEditorModeWhenOpeningInterfaceFileUserDefaultsKey, (YES && !xcodeBehavior), forceDefaults);
     LOAD_PROPERTY(hideDebuggerWhenOpeningInterfaceFile, kHideDebuggerWhenOpeningInterfaceFileUserDefaultsKey, (YES && !xcodeBehavior), forceDefaults);
 	LOAD_PROPERTY(dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFile, kDontHideDebuggerWhileDebuggingWhenOpeningInterfaceFileUserDefaultsKey, (NO && !xcodeBehavior), forceDefaults);
+	LOAD_PROPERTY(hideNavigatorWhenOpeningInterfaceFile, kHideNavigatorWhenOpeningInterfaceFileUserDefaultsKey, (NO && !xcodeBehavior), forceDefaults);
     LOAD_PROPERTY(showUtilitiesWhenOpeningInterfaceFile, kShowUtilitiesWhenOpeningInterfaceFileUserDefaultsKey, (YES && !xcodeBehavior), forceDefaults);
 }
 
