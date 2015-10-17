@@ -13,6 +13,7 @@
 
 @property (nonatomic, strong) IBOutlet NSButton *hideDebuggerWhenTypingBeginsButton;
 @property (nonatomic, strong) IBOutlet NSButton *dontHideDebuggerWhileDebuggingWhenTypingBeginsButton;
+@property (nonatomic, strong) IBOutlet NSButton *hideNavigatorWhenTypingBeginsButton;
 @property (nonatomic, strong) IBOutlet NSButton *hideUtilitiesWhenTypingBeginsButton;
 
 @property (nonatomic, strong) IBOutlet NSButton *restoreEditorModeWhenOpeningTextDocumentButton;
@@ -44,7 +45,8 @@
     
     self.hideDebuggerWhenTypingBeginsButton.state = sharedPrefs.hideDebuggerWhenTypingBegins ? NSOnState : NSOffState;
 	self.dontHideDebuggerWhileDebuggingWhenTypingBeginsButton.state = sharedPrefs.dontHideDebuggerWhileDebuggingWhenTypingBegins ? NSOnState : NSOffState;
-    self.hideUtilitiesWhenTypingBeginsButton.state = sharedPrefs.hideUtilitiesWhenTypingBegins ? NSOnState : NSOffState;
+	self.hideNavigatorWhenTypingBeginsButton.state = sharedPrefs.hideNavigatorWhenTypingBegins ? NSOnState : NSOffState;
+	self.hideUtilitiesWhenTypingBeginsButton.state = sharedPrefs.hideUtilitiesWhenTypingBegins ? NSOnState : NSOffState;
     
     self.restoreEditorModeWhenOpeningTextDocumentButton.state = sharedPrefs.restoreEditorModeWhenOpeningTextDocument ? NSOnState : NSOffState;
     self.restoreDebuggerWhenOpeningTextDocumentButton.state = sharedPrefs.restoreDebuggerWhenOpeningTextDocument ? NSOnState : NSOffState;
@@ -71,6 +73,11 @@
 - (IBAction)dontHideDebuggerWhileDebuggingWhenTypingBeginsButtonPressed:(id)sender {
 	if (![sender isKindOfClass:[NSButton class]]) return;
 	[SPPreferences sharedPreferences].dontHideDebuggerWhileDebuggingWhenTypingBegins = (((NSButton *)sender).state == NSOnState);
+}
+
+- (IBAction)hideNavigatorWhenTypingBeginsButtonPressed:(id)sender {
+	if (![sender isKindOfClass:[NSButton class]]) return;
+	[SPPreferences sharedPreferences].hideNavigatorWhenTypingBegins = (((NSButton *)sender).state == NSOnState);
 }
 
 - (IBAction)hideUtilitiesWhenTypingBeginsButtonPressed:(id)sender {

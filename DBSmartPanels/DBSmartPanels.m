@@ -170,7 +170,7 @@ static DBSmartPanels *sharedPlugin;
             NSNumber *utilitiesHidden = [SPPreferences sharedPreferences].showUtilitiesWhenOpeningInterfaceFile ? @NO : nil;
             NSNumber *editorMode = [SPPreferences sharedPreferences].switchToStandardEditorModeWhenOpeningInterfaceFile ? @(SPIDEEditorModeStandard) : nil;
             
-            [windowController setEditorMode:editorMode debuggerHidden:debuggerHidden utilitiesHidden:utilitiesHidden];
+            [windowController setEditorMode:editorMode debuggerHidden:debuggerHidden navigatorHidden:nil utilitiesHidden:utilitiesHidden];
             break;
         }
             
@@ -179,7 +179,7 @@ static DBSmartPanels *sharedPlugin;
             NSNumber *utilitiesHidden = [SPPreferences sharedPreferences].hideUtilitiesWhenOpeningTextDocument ? @YES : nil;
             NSNumber *editorMode = [SPPreferences sharedPreferences].restoreEditorModeWhenOpeningTextDocument ? self.editorModeBeforeOpeningInterfaceFile : nil;
             
-            [windowController setEditorMode:editorMode debuggerHidden:debuggerHidden utilitiesHidden:utilitiesHidden];
+            [windowController setEditorMode:editorMode debuggerHidden:debuggerHidden navigatorHidden:nil utilitiesHidden:utilitiesHidden];
             
             self.debuggerWasVisibleBeforeOpeningInterfaceFile = NO;
             self.editorModeBeforeOpeningInterfaceFile = nil;
@@ -199,9 +199,10 @@ static DBSmartPanels *sharedPlugin;
 	
 	BOOL canHideDebugger = [self canHideDebuggerWhenTypingBegins];
 	NSNumber *debuggerHidden = (canHideDebugger && [SPPreferences sharedPreferences].hideDebuggerWhenTypingBegins) ? @YES : nil;
-    NSNumber *utilitiesHidden = [SPPreferences sharedPreferences].hideUtilitiesWhenTypingBegins ? @YES : nil;
-    
-    [windowController setEditorMode:nil debuggerHidden:debuggerHidden utilitiesHidden:utilitiesHidden];
+	NSNumber *navigatorHidden = [SPPreferences sharedPreferences].hideNavigatorWhenTypingBegins ? @YES : nil;
+	NSNumber *utilitiesHidden = [SPPreferences sharedPreferences].hideUtilitiesWhenTypingBegins ? @YES : nil;
+	
+	[windowController setEditorMode:nil debuggerHidden:debuggerHidden navigatorHidden:navigatorHidden utilitiesHidden:utilitiesHidden];
 }
 
 #pragma mark - Helper methods

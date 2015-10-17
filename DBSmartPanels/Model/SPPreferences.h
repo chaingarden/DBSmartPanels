@@ -12,6 +12,7 @@
 
 @property (nonatomic) BOOL hideDebuggerWhenTypingBegins;
 @property (nonatomic) BOOL dontHideDebuggerWhileDebuggingWhenTypingBegins;
+@property (nonatomic) BOOL hideNavigatorWhenTypingBegins;
 @property (nonatomic) BOOL hideUtilitiesWhenTypingBegins;
 
 @property (nonatomic) BOOL restoreEditorModeWhenOpeningTextDocument;

@@ -14,7 +14,10 @@
 + (NSWindowController *)windowControllerContainingEditorArea:(NSViewController<IDEEditorArea> *)editorArea;
 + (NSWindowController *)windowControllerContainingSourceTextView:(NSTextView *)sourceTextView;
 
-- (void)setEditorMode:(NSNumber *)editorMode debuggerHidden:(NSNumber *)debuggerHidden utilitiesHidden:(NSNumber *)utilitiesHidden;
+- (void)setEditorMode:(NSNumber *)editorMode
+	   debuggerHidden:(NSNumber *)debuggerHidden
+	  navigatorHidden:(NSNumber *)navigatorHidden
+	  utilitiesHidden:(NSNumber *)utilitiesHidden;
 - (BOOL)isDebuggerHidden;
 
 @end

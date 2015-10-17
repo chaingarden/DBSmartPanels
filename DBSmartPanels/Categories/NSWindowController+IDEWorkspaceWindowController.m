@@ -64,13 +64,20 @@ static NSCache *sourceTextViewToWindowControllerCache;
 
 #pragma mark - Instance methods
 
-- (void)setEditorMode:(NSNumber *)editorMode debuggerHidden:(NSNumber *)debuggerHidden utilitiesHidden:(NSNumber *)utilitiesHidden {
-	if (editorMode) {
+- (void)setEditorMode:(NSNumber *)editorMode
+	   debuggerHidden:(NSNumber *)debuggerHidden
+	  navigatorHidden:(NSNumber *)navigatorHidden
+	  utilitiesHidden:(NSNumber *)utilitiesHidden {
+	if ([editorMode boolValue]) {
 		[self setEditorMode:[editorMode integerValue]];
 	}
 	
 	if (debuggerHidden) {
 		[self setDebuggerHidden:[debuggerHidden boolValue]];
+	}
+	
+	if (navigatorHidden) {
+		[self setNavigatorHidden:[navigatorHidden boolValue]];
 	}
 	
 	if (utilitiesHidden) {
@@ -88,6 +95,14 @@ static NSCache *sourceTextViewToWindowControllerCache;
         NSViewController<IDEEditorArea> *editorArea = self.editorArea;
         [editorArea toggleDebuggerVisibility:nil];
     }
+}
+
+- (void)setNavigatorHidden:(BOOL)hidden {
+	NSObject<IDEWorkspaceTabController> *tabController = self.activeWorkspaceTabController;
+	
+	if ([tabController isNavigatorVisible] == hidden) {
+		[tabController toggleNavigatorsVisibility:nil];
+	}
 }
 
 - (void)setUtilitiesHidden:(BOOL)hidden {

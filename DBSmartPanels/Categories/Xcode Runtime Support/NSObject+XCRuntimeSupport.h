@@ -32,6 +32,8 @@ typedef enum : NSUInteger {
 - (BOOL)isUtilitiesAreaVisible;
 - (void)toggleUtilitiesVisibility:(id)arg1;
 - (void)_updateForDebuggingKVOChange;
+- (BOOL)isNavigatorVisible;
+- (void)toggleNavigatorsVisibility:(id)arg1;
 @end
 
 @protocol IDEWorkspaceWindowController <NSObject>
