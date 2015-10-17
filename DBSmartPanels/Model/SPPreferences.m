@@ -15,6 +15,7 @@
 
 #define kRestoreEditorModeWhenOpeningTextDocumentUserDefaultsKey @"restoreEditorModeWhenOpeningTextDocument"
 #define kRestoreDebuggerWhenOpeningTextDocumentUserDefaultsKey @"restoreDebuggerWhenOpeningTextDocument"
+#define kHideNavigatorWhenOpeningTextDocumentUserDefaultsKey @"hideNavigatorWhenOpeningTextDocument"
 #define kHideUtilitiesWhenOpeningTextDocumentUserDefaultsKey @"hideUtilitiesWhenOpeningTextDocument"
 
 #define kSwitchToStandardEditorModeWhenOpeningInterfaceFileUserDefaultsKey @"switchToStandardEditorModeWhenOpeningInterfaceFile"
@@ -61,6 +62,7 @@ BOOL_PROPERTY(hideUtilitiesWhenTypingBegins, kHideUtilitiesWhenTypingBeginsUserD
 
 BOOL_PROPERTY(restoreEditorModeWhenOpeningTextDocument, kRestoreEditorModeWhenOpeningTextDocumentUserDefaultsKey, setRestoreEditorModeWhenOpeningTextDocument)
 BOOL_PROPERTY(restoreDebuggerWhenOpeningTextDocument, kRestoreDebuggerWhenOpeningTextDocumentUserDefaultsKey, setRestoreDebuggerWhenOpeningTextDocument)
+BOOL_PROPERTY(hideNavigatorWhenOpeningTextDocument, kHideNavigatorWhenOpeningTextDocumentUserDefaultsKey, setHideNavigatorWhenOpeningTextDocument)
 BOOL_PROPERTY(hideUtilitiesWhenOpeningTextDocument, kHideUtilitiesWhenOpeningTextDocumentUserDefaultsKey, setHideUtilitiesWhenOpeningTextDocument)
 
 BOOL_PROPERTY(switchToStandardEditorModeWhenOpeningInterfaceFile, kSwitchToStandardEditorModeWhenOpeningInterfaceFileUserDefaultsKey, setSwitchToStandardEditorModeWhenOpeningInterfaceFile)
@@ -82,7 +84,8 @@ BOOL_PROPERTY(showUtilitiesWhenOpeningInterfaceFile, kShowUtilitiesWhenOpeningIn
     
     LOAD_PROPERTY(restoreEditorModeWhenOpeningTextDocument, kRestoreEditorModeWhenOpeningTextDocumentUserDefaultsKey, (YES && !xcodeBehavior), forceDefaults);
     LOAD_PROPERTY(restoreDebuggerWhenOpeningTextDocument, kRestoreDebuggerWhenOpeningTextDocumentUserDefaultsKey, (NO && !xcodeBehavior), forceDefaults);
-    LOAD_PROPERTY(hideUtilitiesWhenOpeningTextDocument, kHideUtilitiesWhenOpeningTextDocumentUserDefaultsKey, (YES && !xcodeBehavior), forceDefaults);
+	LOAD_PROPERTY(hideNavigatorWhenOpeningTextDocument, kHideNavigatorWhenOpeningTextDocumentUserDefaultsKey, (NO && !xcodeBehavior), forceDefaults);
+	LOAD_PROPERTY(hideUtilitiesWhenOpeningTextDocument, kHideUtilitiesWhenOpeningTextDocumentUserDefaultsKey, (YES && !xcodeBehavior), forceDefaults);
     
     LOAD_PROPERTY(switchToStandardEditorModeWhenOpeningInterfaceFile, kSwitchToStandardEditorModeWhenOpeningInterfaceFileUserDefaultsKey, (YES && !xcodeBehavior), forceDefaults);
     LOAD_PROPERTY(hideDebuggerWhenOpeningInterfaceFile, kHideDebuggerWhenOpeningInterfaceFileUserDefaultsKey, (YES && !xcodeBehavior), forceDefaults);

@@ -176,10 +176,11 @@ static DBSmartPanels *sharedPlugin;
             
         case SPDocumentTypeText: {
             NSNumber *debuggerHidden = (([SPPreferences sharedPreferences].restoreDebuggerWhenOpeningTextDocument || (self.isDebugging && [SPPreferences sharedPreferences].dontHideDebuggerWhileDebuggingWhenTypingBegins)) && self.debuggerWasVisibleBeforeOpeningInterfaceFile) ? @NO : nil;
-            NSNumber *utilitiesHidden = [SPPreferences sharedPreferences].hideUtilitiesWhenOpeningTextDocument ? @YES : nil;
+			NSNumber *navigatorHidden = [SPPreferences sharedPreferences].hideNavigatorWhenOpeningTextDocument ? @YES : nil;
+			NSNumber *utilitiesHidden = [SPPreferences sharedPreferences].hideUtilitiesWhenOpeningTextDocument ? @YES : nil;
             NSNumber *editorMode = [SPPreferences sharedPreferences].restoreEditorModeWhenOpeningTextDocument ? self.editorModeBeforeOpeningInterfaceFile : nil;
             
-            [windowController setEditorMode:editorMode debuggerHidden:debuggerHidden navigatorHidden:nil utilitiesHidden:utilitiesHidden];
+            [windowController setEditorMode:editorMode debuggerHidden:debuggerHidden navigatorHidden:navigatorHidden utilitiesHidden:utilitiesHidden];
             
             self.debuggerWasVisibleBeforeOpeningInterfaceFile = NO;
             self.editorModeBeforeOpeningInterfaceFile = nil;

@@ -11,6 +11,7 @@
                 <outlet property="dontHideDebuggerWhileDebuggingWhenTypingBeginsButton" destination="TEQ-FR-xQK" id="AaP-uR-Gvq"/>
                 <outlet property="hideDebuggerWhenOpeningInterfaceFileButton" destination="htl-sW-WIM" id="mXS-Sw-Dpz"/>
                 <outlet property="hideDebuggerWhenTypingBeginsButton" destination="Koz-5r-2o7" id="OoX-xK-uHv"/>
+                <outlet property="hideNavigatorWhenOpeningTextDocumentButton" destination="SKY-fH-t46" id="sEn-xO-877"/>
                 <outlet property="hideNavigatorWhenTypingBeginsButton" destination="8Fx-8r-cbf" id="nxY-IT-jBr"/>
                 <outlet property="hideUtilitiesWhenOpeningTextDocumentButton" destination="FDe-x5-9Jn" id="clD-CZ-ppp"/>
                 <outlet property="hideUtilitiesWhenTypingBeginsButton" destination="R7k-0s-2xl" id="GIZ-gG-Cxx"/>
@@ -26,14 +27,14 @@
         <window title="Smart Panels" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" visibleAtLaunch="NO" frameAutosaveName="DBSmartPanelPreferencesWindow" animationBehavior="default" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="480" height="364"/>
+            <rect key="contentRect" x="196" y="240" width="480" height="384"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="364"/>
+                <rect key="frame" x="0.0" y="0.0" width="480" height="384"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Koz-5r-2o7">
-                        <rect key="frame" x="246" y="326" width="116" height="18"/>
+                        <rect key="frame" x="246" y="346" width="116" height="18"/>
                         <animations/>
                         <buttonCell key="cell" type="check" title="Hide debugger" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="CSJ-ck-3Ec">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -44,7 +45,7 @@
                         </connections>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TEQ-FR-xQK">
-                        <rect key="frame" x="265" y="306" width="173" height="18"/>
+                        <rect key="frame" x="265" y="326" width="173" height="18"/>
                         <animations/>
                         <buttonCell key="cell" type="check" title="Except while debugging" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="v36-UR-75U">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -55,7 +56,7 @@
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C13-zT-WpR">
-                        <rect key="frame" x="110" y="327" width="132" height="17"/>
+                        <rect key="frame" x="110" y="347" width="132" height="17"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="When typing begins:" id="fk3-pS-3ew">
                             <font key="font" metaFont="system"/>
@@ -64,7 +65,7 @@
                         </textFieldCell>
                     </textField>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R7k-0s-2xl">
-                        <rect key="frame" x="246" y="266" width="101" height="18"/>
+                        <rect key="frame" x="246" y="286" width="101" height="18"/>
                         <animations/>
                         <buttonCell key="cell" type="check" title="Hide utilities" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Q0P-3j-alh">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -75,7 +76,7 @@
                         </connections>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pic-kt-XNh">
-                        <rect key="frame" x="246" y="208" width="168" height="18"/>
+                        <rect key="frame" x="246" y="228" width="168" height="18"/>
                         <animations/>
                         <buttonCell key="cell" type="check" title="Restore debugger state" bezelStyle="regularSquare" imagePosition="left" inset="2" id="yzt-fX-7NP">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -86,7 +87,7 @@
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xiu-aO-pm8">
-                        <rect key="frame" x="36" y="229" width="206" height="17"/>
+                        <rect key="frame" x="36" y="249" width="206" height="17"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="When opening a text document:" id="6za-d4-nct">
                             <font key="font" metaFont="system"/>
@@ -106,7 +107,7 @@
                         </connections>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1uI-AF-gcD">
-                        <rect key="frame" x="246" y="228" width="151" height="18"/>
+                        <rect key="frame" x="246" y="248" width="151" height="18"/>
                         <animations/>
                         <buttonCell key="cell" type="check" title="Restore editor mode" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="gFD-Wv-xmC">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -201,7 +202,7 @@
                         </connections>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Fx-8r-cbf">
-                        <rect key="frame" x="246" y="286" width="157" height="18"/>
+                        <rect key="frame" x="246" y="306" width="157" height="18"/>
                         <animations/>
                         <buttonCell key="cell" type="check" title="Hide project navigator" bezelStyle="regularSquare" imagePosition="left" inset="2" id="2bR-1A-KpG">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -211,13 +212,24 @@
                             <action selector="hideNavigatorWhenTypingBeginsButtonPressed:" target="-2" id="Nq5-01-g2q"/>
                         </connections>
                     </button>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SKY-fH-t46">
+                        <rect key="frame" x="246" y="208" width="157" height="18"/>
+                        <animations/>
+                        <buttonCell key="cell" type="check" title="Hide project navigator" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Xb3-rt-adg">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="hideNavigatorWhenOpeningTextDocumentButtonPressed:" target="-2" id="eru-dm-F41"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <animations/>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="403" y="330.5"/>
+            <point key="canvasLocation" x="403" y="330"/>
         </window>
     </objects>
 </document>

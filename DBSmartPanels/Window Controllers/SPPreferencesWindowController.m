@@ -18,6 +18,7 @@
 
 @property (nonatomic, strong) IBOutlet NSButton *restoreEditorModeWhenOpeningTextDocumentButton;
 @property (nonatomic, strong) IBOutlet NSButton *restoreDebuggerWhenOpeningTextDocumentButton;
+@property (nonatomic, strong) IBOutlet NSButton *hideNavigatorWhenOpeningTextDocumentButton;
 @property (nonatomic, strong) IBOutlet NSButton *hideUtilitiesWhenOpeningTextDocumentButton;
 
 @property (nonatomic, strong) IBOutlet NSButton *switchToStandardEditorModeWhenOpeningInterfaceFileButton;
@@ -50,7 +51,8 @@
     
     self.restoreEditorModeWhenOpeningTextDocumentButton.state = sharedPrefs.restoreEditorModeWhenOpeningTextDocument ? NSOnState : NSOffState;
     self.restoreDebuggerWhenOpeningTextDocumentButton.state = sharedPrefs.restoreDebuggerWhenOpeningTextDocument ? NSOnState : NSOffState;
-    self.hideUtilitiesWhenOpeningTextDocumentButton.state = sharedPrefs.hideUtilitiesWhenOpeningTextDocument ? NSOnState : NSOffState;
+	self.hideNavigatorWhenOpeningTextDocumentButton.state = sharedPrefs.hideNavigatorWhenOpeningTextDocument ? NSOnState : NSOffState;
+	self.hideUtilitiesWhenOpeningTextDocumentButton.state = sharedPrefs.hideUtilitiesWhenOpeningTextDocument ? NSOnState : NSOffState;
     
     self.switchToStandardEditorModeWhenOpeningInterfaceFileButton.state = sharedPrefs.switchToStandardEditorModeWhenOpeningInterfaceFile ? NSOnState : NSOffState;
     self.hideDebuggerWhenOpeningInterfaceFileButton.state = sharedPrefs.hideDebuggerWhenOpeningInterfaceFile ? NSOnState : NSOffState;
@@ -93,6 +95,11 @@
 - (IBAction)restoreDebuggerWhenOpeningTextDocumentButtonPressed:(id)sender {
     if (![sender isKindOfClass:[NSButton class]]) return;
     [SPPreferences sharedPreferences].restoreDebuggerWhenOpeningTextDocument = (((NSButton *)sender).state == NSOnState);
+}
+
+- (IBAction)hideNavigatorWhenOpeningTextDocumentButtonPressed:(id)sender {
+	if (![sender isKindOfClass:[NSButton class]]) return;
+	[SPPreferences sharedPreferences].hideNavigatorWhenOpeningTextDocument = (((NSButton *)sender).state == NSOnState);
 }
 
 - (IBAction)hideUtilitiesWhenOpeningTextDocumentButtonPressed:(id)sender {

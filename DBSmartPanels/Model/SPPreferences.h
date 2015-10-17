@@ -17,6 +17,7 @@
 
 @property (nonatomic) BOOL restoreEditorModeWhenOpeningTextDocument;
 @property (nonatomic) BOOL restoreDebuggerWhenOpeningTextDocument;
+@property (nonatomic) BOOL hideNavigatorWhenOpeningTextDocument;
 @property (nonatomic) BOOL hideUtilitiesWhenOpeningTextDocument;
 
 @property (nonatomic) BOOL switchToStandardEditorModeWhenOpeningInterfaceFile;
