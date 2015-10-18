@@ -27,6 +27,8 @@
 @property (nonatomic, strong) IBOutlet NSButton *hideNavigatorWhenOpeningInterfaceFileButton;
 @property (nonatomic, strong) IBOutlet NSButton *showUtilitiesWhenOpeningInterfaceFileButton;
 
+@property (nonatomic, strong) IBOutlet NSTextField *restoreNavigatorCaptionTextField;
+
 @end
 
 @implementation SPPreferencesWindowController
@@ -62,6 +64,16 @@
 	
 	self.dontHideDebuggerWhileDebuggingWhenTypingBeginsButton.enabled = sharedPrefs.hideDebuggerWhenTypingBegins;
 	self.dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFileButton.enabled = sharedPrefs.hideDebuggerWhenOpeningInterfaceFile;
+	
+	[self updateRestoreNavigatorCaptionVisibility];
+}
+
+- (void)updateRestoreNavigatorCaptionVisibility {
+	SPPreferences *sharedPrefs = [SPPreferences sharedPreferences];
+	
+	self.restoreNavigatorCaptionTextField.hidden = !(sharedPrefs.hideNavigatorWhenTypingBegins ||
+													 sharedPrefs.hideNavigatorWhenOpeningTextDocument ||
+													 sharedPrefs.hideNavigatorWhenOpeningInterfaceFile);
 }
 
 #pragma mark - Actions
@@ -81,6 +93,7 @@
 - (IBAction)hideNavigatorWhenTypingBeginsButtonPressed:(id)sender {
 	if (![sender isKindOfClass:[NSButton class]]) return;
 	[SPPreferences sharedPreferences].hideNavigatorWhenTypingBegins = (((NSButton *)sender).state == NSOnState);
+	[self updateRestoreNavigatorCaptionVisibility];
 }
 
 - (IBAction)hideUtilitiesWhenTypingBeginsButtonPressed:(id)sender {
@@ -101,6 +114,7 @@
 - (IBAction)hideNavigatorWhenOpeningTextDocumentButtonPressed:(id)sender {
 	if (![sender isKindOfClass:[NSButton class]]) return;
 	[SPPreferences sharedPreferences].hideNavigatorWhenOpeningTextDocument = (((NSButton *)sender).state == NSOnState);
+	[self updateRestoreNavigatorCaptionVisibility];
 }
 
 - (IBAction)hideUtilitiesWhenOpeningTextDocumentButtonPressed:(id)sender {
@@ -128,6 +142,7 @@
 - (IBAction)hideNavigatorWhenOpeningInterfaceFileButtonPressed:(id)sender {
 	if (![sender isKindOfClass:[NSButton class]]) return;
 	[SPPreferences sharedPreferences].hideNavigatorWhenOpeningInterfaceFile = (((NSButton *)sender).state == NSOnState);
+	[self updateRestoreNavigatorCaptionVisibility];
 }
 
 - (IBAction)showUtilitiesWhenOpeningInterfaceFileButtonPressed:(id)sender {
