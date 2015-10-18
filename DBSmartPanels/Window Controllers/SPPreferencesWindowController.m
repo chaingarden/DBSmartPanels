@@ -58,9 +58,10 @@
 	self.hideUtilitiesWhenOpeningTextDocumentButton.state = sharedPrefs.hideUtilitiesWhenOpeningTextDocument ? NSOnState : NSOffState;
     
     self.switchToStandardEditorModeWhenOpeningInterfaceFileButton.state = sharedPrefs.switchToStandardEditorModeWhenOpeningInterfaceFile ? NSOnState : NSOffState;
-    self.hideNavigatorWhenOpeningInterfaceFileButton.state = sharedPrefs.hideNavigatorWhenOpeningInterfaceFile ? NSOnState : NSOffState;
+	self.hideDebuggerWhenOpeningInterfaceFileButton.state = sharedPrefs.hideDebuggerWhenOpeningInterfaceFile ? NSOnState : NSOffState;
 	self.dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFileButton.state = sharedPrefs.dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFile ? NSOnState : NSOffState;
-    self.showUtilitiesWhenOpeningInterfaceFileButton.state = sharedPrefs.showUtilitiesWhenOpeningInterfaceFile ? NSOnState : NSOffState;
+	self.hideNavigatorWhenOpeningInterfaceFileButton.state = sharedPrefs.hideNavigatorWhenOpeningInterfaceFile ? NSOnState : NSOffState;
+	self.showUtilitiesWhenOpeningInterfaceFileButton.state = sharedPrefs.showUtilitiesWhenOpeningInterfaceFile ? NSOnState : NSOffState;
 	
 	self.dontHideDebuggerWhileDebuggingWhenTypingBeginsButton.enabled = sharedPrefs.hideDebuggerWhenTypingBegins;
 	self.dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFileButton.enabled = sharedPrefs.hideDebuggerWhenOpeningInterfaceFile;
