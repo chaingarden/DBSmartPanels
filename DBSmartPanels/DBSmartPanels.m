@@ -31,8 +31,7 @@ static DBSmartPanels *sharedPlugin;
 
 #pragma mark - Class methods
 
-+ (void)pluginDidLoad:(NSBundle *)plugin
-{
++ (void)pluginDidLoad:(NSBundle *)plugin {
     static dispatch_once_t onceToken;
     NSString *currentApplicationName = [[NSBundle mainBundle] infoDictionary][@"CFBundleName"];
     if ([currentApplicationName isEqual:@"Xcode"]) {
@@ -42,15 +41,13 @@ static DBSmartPanels *sharedPlugin;
     }
 }
 
-+ (instancetype)sharedPlugin
-{
++ (instancetype)sharedPlugin {
     return sharedPlugin;
 }
 
 #pragma mark - Plugin lifeycle
 
-- (id)initWithBundle:(NSBundle *)plugin
-{
+- (id)initWithBundle:(NSBundle *)plugin {
 	@try {
 		if (self = [super init]) {
 			// reference to plugin's bundle, for resource access
