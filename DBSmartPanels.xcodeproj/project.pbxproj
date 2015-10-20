@@ -11,6 +11,7 @@
 		5527678F19FA14EA00236FC5 /* NSView+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 5527678E19FA14EA00236FC5 /* NSView+Utilities.m */; };
 		8105AA8F19F4593B008C7482 /* NSMenu+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 8105AA8E19F4593B008C7482 /* NSMenu+Utilities.m */; };
 		8151715E19F6BA2D0012D4B7 /* NSDocument+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 8151715D19F6BA2D0012D4B7 /* NSDocument+Utilities.m */; };
+		818A83201BD5CAFC0069F42E /* NSObject+IDENavigatorArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 818A831F1BD5CAFC0069F42E /* NSObject+IDENavigatorArea.m */; settings = {ASSET_TAGS = (); }; };
 		8197B49E19F45D5C0051FEEC /* SPPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8197B49C19F45D5C0051FEEC /* SPPreferencesWindowController.m */; };
 		8197B49F19F45D5C0051FEEC /* SPPreferencesWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8197B49D19F45D5C0051FEEC /* SPPreferencesWindowController.xib */; };
 		8197B4A219F45D8F0051FEEC /* SPPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 8197B4A119F45D8F0051FEEC /* SPPreferences.m */; };
@@ -32,6 +33,8 @@
 		8105AA9119F45956008C7482 /* NSObject+XCRuntimeSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+XCRuntimeSupport.h"; sourceTree = "<group>"; };
 		8151715C19F6BA2D0012D4B7 /* NSDocument+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDocument+Utilities.h"; sourceTree = "<group>"; };
 		8151715D19F6BA2D0012D4B7 /* NSDocument+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDocument+Utilities.m"; sourceTree = "<group>"; };
+		818A831E1BD5CAFC0069F42E /* NSObject+IDENavigatorArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+IDENavigatorArea.h"; sourceTree = "<group>"; };
+		818A831F1BD5CAFC0069F42E /* NSObject+IDENavigatorArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+IDENavigatorArea.m"; sourceTree = "<group>"; };
 		8197B49B19F45D5C0051FEEC /* SPPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPPreferencesWindowController.h; sourceTree = "<group>"; };
 		8197B49C19F45D5C0051FEEC /* SPPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPPreferencesWindowController.m; sourceTree = "<group>"; };
 		8197B49D19F45D5C0051FEEC /* SPPreferencesWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SPPreferencesWindowController.xib; sourceTree = "<group>"; };
@@ -149,6 +152,8 @@
 				8151715D19F6BA2D0012D4B7 /* NSDocument+Utilities.m */,
 				8105AA8D19F4593B008C7482 /* NSMenu+Utilities.h */,
 				8105AA8E19F4593B008C7482 /* NSMenu+Utilities.m */,
+				818A831E1BD5CAFC0069F42E /* NSObject+IDENavigatorArea.h */,
+				818A831F1BD5CAFC0069F42E /* NSObject+IDENavigatorArea.m */,
 				5512853519F8058300620CA7 /* NSTextView+DVTSourceTextView.h */,
 				5512853619F8058300620CA7 /* NSTextView+DVTSourceTextView.m */,
 				5527678D19FA14EA00236FC5 /* NSView+Utilities.h */,
@@ -253,6 +258,7 @@
 				8197B49E19F45D5C0051FEEC /* SPPreferencesWindowController.m in Sources */,
 				81F6BD6F19F0C9B000A2FFB8 /* Aspects.m in Sources */,
 				8105AA8F19F4593B008C7482 /* NSMenu+Utilities.m in Sources */,
+				818A83201BD5CAFC0069F42E /* NSObject+IDENavigatorArea.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

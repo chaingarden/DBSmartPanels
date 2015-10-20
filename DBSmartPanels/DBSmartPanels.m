@@ -16,6 +16,7 @@
 #import "SPPreferences.h"
 #import "NSDocument+Utilities.h"
 #import "NSTextView+DVTSourceTextView.h"
+#import "NSObject+IDENavigatorArea.h"
 
 static DBSmartPanels *sharedPlugin;
 
@@ -163,8 +164,10 @@ static DBSmartPanels *sharedPlugin;
             self.editorModeBeforeOpeningInterfaceFile = @(editorArea.editorMode);
 			
 			BOOL canHideDebugger = [self canHideDebuggerWhenOpeningInterfaceFile];
+            BOOL canHideNavigator = [self canHideNavigatorForWindowController:windowController];
+            
             NSNumber *debuggerHidden = (canHideDebugger && [SPPreferences sharedPreferences].hideDebuggerWhenOpeningInterfaceFile) ? @YES : nil;
-			NSNumber *navigatorHidden = [SPPreferences sharedPreferences].hideNavigatorWhenOpeningInterfaceFile ? @YES : nil;
+			NSNumber *navigatorHidden = (canHideNavigator && [SPPreferences sharedPreferences].hideNavigatorWhenOpeningInterfaceFile) ? @YES : nil;
 			NSNumber *utilitiesHidden = [SPPreferences sharedPreferences].showUtilitiesWhenOpeningInterfaceFile ? @NO : nil;
             NSNumber *editorMode = [SPPreferences sharedPreferences].switchToStandardEditorModeWhenOpeningInterfaceFile ? @(SPIDEEditorModeStandard) : nil;
             
@@ -173,8 +176,10 @@ static DBSmartPanels *sharedPlugin;
         }
             
         case SPDocumentTypeText: {
+            BOOL canHideNavigator = [self canHideNavigatorForWindowController:windowController];
+            
             NSNumber *debuggerHidden = (([SPPreferences sharedPreferences].restoreDebuggerWhenOpeningTextDocument || (self.isDebugging && [SPPreferences sharedPreferences].dontHideDebuggerWhileDebuggingWhenTypingBegins)) && self.debuggerWasVisibleBeforeOpeningInterfaceFile) ? @NO : nil;
-			NSNumber *navigatorHidden = [SPPreferences sharedPreferences].hideNavigatorWhenOpeningTextDocument ? @YES : nil;
+			NSNumber *navigatorHidden = (canHideNavigator && [SPPreferences sharedPreferences].hideNavigatorWhenOpeningTextDocument) ? @YES : nil;
 			NSNumber *utilitiesHidden = [SPPreferences sharedPreferences].hideUtilitiesWhenOpeningTextDocument ? @YES : nil;
             NSNumber *editorMode = [SPPreferences sharedPreferences].restoreEditorModeWhenOpeningTextDocument ? self.editorModeBeforeOpeningInterfaceFile : nil;
             
@@ -196,9 +201,11 @@ static DBSmartPanels *sharedPlugin;
 		return;
 	}
 	
-	BOOL canHideDebugger = [self canHideDebuggerWhenTypingBegins];
+    BOOL canHideDebugger = [self canHideDebuggerWhenTypingBegins];
+    BOOL canHideNavigator = [self canHideNavigatorForWindowController:windowController];
+    
 	NSNumber *debuggerHidden = (canHideDebugger && [SPPreferences sharedPreferences].hideDebuggerWhenTypingBegins) ? @YES : nil;
-	NSNumber *navigatorHidden = [SPPreferences sharedPreferences].hideNavigatorWhenTypingBegins ? @YES : nil;
+	NSNumber *navigatorHidden = (canHideNavigator && [SPPreferences sharedPreferences].hideNavigatorWhenTypingBegins) ? @YES : nil;
 	NSNumber *utilitiesHidden = [SPPreferences sharedPreferences].hideUtilitiesWhenTypingBegins ? @YES : nil;
 	
 	[windowController setEditorMode:nil debuggerHidden:debuggerHidden navigatorHidden:navigatorHidden utilitiesHidden:utilitiesHidden];
@@ -212,6 +219,14 @@ static DBSmartPanels *sharedPlugin;
 
 - (BOOL)canHideDebuggerWhenTypingBegins {
 	return (!self.isDebugging || ![SPPreferences sharedPreferences].dontHideDebuggerWhileDebuggingWhenTypingBegins);
+}
+
+- (BOOL)canHideNavigatorForWindowController:(NSWindowController<IDEWorkspaceWindowController> *)windowController {
+    NSObject<IDEWorkspaceTabController> *tabController = (NSObject<IDEWorkspaceTabController> *)windowController.activeWorkspaceTabController;
+    NSObject<IDENavigatorArea> *navigatorArea = (NSObject<IDENavigatorArea> *)tabController.navigatorArea;
+    
+    // don't allow hiding if Find navigator tab is showing
+    return (navigatorArea.currentMode != SPIDENavigatorModeFind);
 }
 
 @end
