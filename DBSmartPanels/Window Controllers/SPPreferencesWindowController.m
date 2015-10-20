@@ -11,6 +11,8 @@
 
 @interface SPPreferencesWindowController ()
 
+@property (nonatomic, strong) IBOutlet NSPopUpButton *setupPopUpButton;
+
 @property (nonatomic, strong) IBOutlet NSButton *hideDebuggerWhenTypingBeginsButton;
 @property (nonatomic, strong) IBOutlet NSButton *dontHideDebuggerWhileDebuggingWhenTypingBeginsButton;
 @property (nonatomic, strong) IBOutlet NSButton *hideNavigatorWhenTypingBeginsButton;
@@ -37,10 +39,16 @@
     [super windowDidLoad];
     
     // load preferences
+	[self loadSetupOptions];
     [self updateUI];
 }
 
 #pragma mark - Initial load
+
+- (void)loadSetupOptions {
+	[self.setupPopUpButton removeAllItems];
+	[self.setupPopUpButton addItemsWithTitles:@[@"Default Plugin Behavior", @"Maximize Editor Space", @"Default Xcode Behavior", @"Custom"]];
+}
 
 - (void)updateUI {
     SPPreferences *sharedPrefs = [SPPreferences sharedPreferences];
