@@ -48,7 +48,7 @@ typedef enum : NSUInteger {
 - (id)debugSessionController;
 - (BOOL)isUtilitiesAreaVisible;
 - (void)toggleUtilitiesVisibility:(id)arg1;
-- (void)_updateForDebuggingKVOChange;
+- (void)_updateForDebuggingKVOChange; // detect debug session state changes in Xcode 6; removed in Xcode 7
 - (BOOL)isNavigatorVisible;
 - (void)toggleNavigatorsVisibility:(id)arg1;
 @end
@@ -56,5 +56,6 @@ typedef enum : NSUInteger {
 @protocol IDEWorkspaceWindowController <NSObject>
 @property (readonly) id<IDEWorkspaceTabController> activeWorkspaceTabController;
 @property (readonly) id<IDEEditorArea> editorArea;
-- (NSArray *)workspaceWindowControllers;
++ (NSArray *)workspaceWindowControllers;
+- (void)changeFromDebugSessionState:(id)arg1 to:(id)arg2 forLaunchSession:(id)arg3; // detect debug session state changes in Xcode 7+
 @end
