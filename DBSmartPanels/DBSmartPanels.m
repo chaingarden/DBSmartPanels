@@ -119,17 +119,40 @@ static DBSmartPanels *sharedPlugin;
             }
         } error:NULL];
         
-        [objc_getClass("IDEWorkspaceTabController") aspect_hookSelector:@selector(_updateForDebuggingKVOChange) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo) {
-            @try {
-                NSObject<IDEWorkspaceTabController> *tabController = [aspectInfo instance];
-                NSObject *debugSessionController = [tabController debugSessionController];
-                
-                self.isDebugging = (debugSessionController != nil);
+        Class windowControllerClass = objc_getClass("IDEWorkspaceWindowController");
+        
+        if ([windowControllerClass respondsToSelector:@selector(changeFromDebugSessionState:to:forLaunchSession:)]) {
+            // Xcode 7 and above
+            [windowControllerClass aspect_hookSelector:@selector(changeFromDebugSessionState:to:forLaunchSession:) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo) {
+                @try {
+                    NSObject<IDEWorkspaceWindowController> *windowController = [aspectInfo instance];
+                    NSObject<IDEWorkspaceTabController> *tabController = (NSObject<IDEWorkspaceTabController> *)windowController.activeWorkspaceTabController;
+                    NSObject *debugSessionController = [tabController debugSessionController];
+                    
+                    self.isDebugging = (debugSessionController != nil);
+                }
+                @catch (NSException *exception) {
+                    [self logException:exception];
+                }
+            } error:NULL];
+        } else {
+            Class tabControllerClass = objc_getClass("IDEWorkspaceTabController");
+            
+            if ([tabControllerClass respondsToSelector:@selector(_updateForDebuggingKVOChange)]) {
+                // Xcode 6 and below
+                [objc_getClass("IDEWorkspaceTabController") aspect_hookSelector:@selector(_updateForDebuggingKVOChange) withOptions:AspectPositionAfter usingBlock:^(id<AspectInfo> aspectInfo) {
+                    @try {
+                        NSObject<IDEWorkspaceTabController> *tabController = [aspectInfo instance];
+                        NSObject *debugSessionController = [tabController debugSessionController];
+                        
+                        self.isDebugging = (debugSessionController != nil);
+                    }
+                    @catch (NSException *exception) {
+                        [self logException:exception];
+                    }
+                } error:NULL];
             }
-            @catch (NSException *exception) {
-                [self logException:exception];
-            }
-        } error:NULL];
+        }
     }
     @catch (NSException *exception) {
         [self logException:exception];
