@@ -11,7 +11,8 @@
 
 @interface SPPreferencesWindowController ()
 
-@property (nonatomic, strong) IBOutlet NSPopUpButton *setupPopUpButton;
+@property (nonatomic, strong) IBOutlet NSPopUpButton *behaviorPopUpButton;
+@property (nonatomic, strong) IBOutlet NSTextField *behaviorExplanationTextField;
 
 @property (nonatomic, strong) IBOutlet NSButton *hideDebuggerWhenTypingBeginsButton;
 @property (nonatomic, strong) IBOutlet NSButton *dontHideDebuggerWhileDebuggingWhenTypingBeginsButton;
@@ -46,12 +47,23 @@
 #pragma mark - Initial load
 
 - (void)loadSetupOptions {
-	[self.setupPopUpButton removeAllItems];
-	[self.setupPopUpButton addItemsWithTitles:@[@"Default Plugin Behavior", @"Maximize Editor Space", @"Default Xcode Behavior", @"Custom"]];
+	[self.behaviorPopUpButton removeAllItems];
+    
+    NSMutableArray *behaviorTitles = [NSMutableArray arrayWithCapacity:SPAutohidingNumBehaviors];
+    for (NSInteger numBehavior = 0; numBehavior < SPAutohidingNumBehaviors; numBehavior++) {
+        [behaviorTitles addObject:[SPPreferences titleForAutohidingBehavior:numBehavior]];
+    }
+    
+	[self.behaviorPopUpButton addItemsWithTitles:behaviorTitles];
 }
 
 - (void)updateUI {
     SPPreferences *sharedPrefs = [SPPreferences sharedPreferences];
+    
+    if (sharedPrefs.autohidingBehavior < self.behaviorPopUpButton.numberOfItems) {
+        [self.behaviorPopUpButton selectItemAtIndex:sharedPrefs.autohidingBehavior];
+    }
+    [self updateAutohidingBehaviorExplanation];
     
     self.hideDebuggerWhenTypingBeginsButton.state = sharedPrefs.hideDebuggerWhenTypingBegins ? NSOnState : NSOffState;
 	self.dontHideDebuggerWhileDebuggingWhenTypingBeginsButton.state = sharedPrefs.dontHideDebuggerWhileDebuggingWhenTypingBegins ? NSOnState : NSOffState;
@@ -73,7 +85,20 @@
 	self.dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFileButton.enabled = sharedPrefs.hideDebuggerWhenOpeningInterfaceFile;
 }
 
+- (void)updateAutohidingBehaviorExplanation {
+    SPPreferences *sharedPrefs = [SPPreferences sharedPreferences];
+    
+    [self.behaviorExplanationTextField setStringValue:[SPPreferences explanationForAutohidingBehavior:sharedPrefs.autohidingBehavior]];
+}
+
 #pragma mark - Actions
+
+- (IBAction)autohidingBehaviorPopUpButtonValueChanged:(id)sender {
+    SPPreferences *sharedPrefs = [SPPreferences sharedPreferences];
+    sharedPrefs.autohidingBehavior = self.behaviorPopUpButton.indexOfSelectedItem;
+    
+    [self updateUI];
+}
 
 - (IBAction)hideDebuggerWhenTypingBeginsButtonPressed:(id)sender {
     if (![sender isKindOfClass:[NSButton class]]) return;
@@ -142,16 +167,6 @@
 - (IBAction)showUtilitiesWhenOpeningInterfaceFileButtonPressed:(id)sender {
     if (![sender isKindOfClass:[NSButton class]]) return;
     [SPPreferences sharedPreferences].showUtilitiesWhenOpeningInterfaceFile = (((NSButton *)sender).state == NSOnState);
-}
-
-- (IBAction)restorePluginDefaultsButtonPressed:(id)sender {
-    [[SPPreferences sharedPreferences] restoreDefaults];
-    [self updateUI];
-}
-
-- (IBAction)restoreXcodeDefaultBehaviorButtonPressed:(id)sender {
-    [[SPPreferences sharedPreferences] restoreXcodeBehavior];
-    [self updateUI];
 }
 
 @end

@@ -8,7 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum : NSUInteger {
+    SPAutohidingBehaviorNone = 0,
+    SPAutohidingBehaviorConservative = 1,
+    SPAutohidingBehaviorAggressive = 2,
+    SPAutohidingBehaviorCustom = 3,
+    SPAutohidingNumBehaviors = 4
+} SPAutohidingBehavior;
+
 @interface SPPreferences : NSObject
+
+@property (nonatomic) SPAutohidingBehavior autohidingBehavior;
 
 @property (nonatomic) BOOL hideDebuggerWhenTypingBegins;
 @property (nonatomic) BOOL dontHideDebuggerWhileDebuggingWhenTypingBegins;
@@ -28,7 +38,7 @@
 
 + (SPPreferences *)sharedPreferences;
 
-- (void)restoreDefaults;
-- (void)restoreXcodeBehavior;
++ (NSString *)titleForAutohidingBehavior:(SPAutohidingBehavior)behavior;
++ (NSString *)explanationForAutohidingBehavior:(SPAutohidingBehavior)behavior;
 
 @end

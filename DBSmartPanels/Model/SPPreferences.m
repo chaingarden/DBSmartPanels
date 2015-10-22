@@ -8,6 +8,8 @@
 
 #import "SPPreferences.h"
 
+#define kAutohidingBehaviorUserDefaultsKey @"autohidingBehavior"
+
 #define kHideDebuggerWhenTypingBeginsUserDefaultsKey @"hideDebuggerWhenTypingBegins"
 #define kDontHideDebuggerWhileDebuggingWhenTypingBeginsUserDefaultsKey @"dontHideDebuggerWhileDebuggingWhenTypingBegins"
 #define kHideNavigatorWhenTypingBeginsUserDefaultsKey @"hideNavigatorWhenTypingBegins"
@@ -24,8 +26,8 @@
 #define kHideNavigatorWhenOpeningInterfaceFileUserDefaultsKey @"hideNavigatorWhenOpeningInterfaceFile"
 #define kShowUtilitiesWhenOpeningInterfaceFileUserDefaultsKey @"showUtilitiesWhenOpeningInterfaceFile"
 
-#define LOAD_PROPERTY(NAME, KEY, DEFAULT_VALUE, FORCE_DEFAULT) \
-if (FORCE_DEFAULT || ![[NSUserDefaults standardUserDefaults] objectForKey:@""KEY]) self.NAME = DEFAULT_VALUE;
+#define LOAD_PROPERTY(NAME, KEY, DEFAULT_VALUE) \
+if (![[NSUserDefaults standardUserDefaults] objectForKey:@""KEY]) self.NAME = DEFAULT_VALUE;
 
 #define BOOL_PROPERTY(NAME, KEY, SETTER) \
 - (BOOL)NAME { return [[NSUserDefaults standardUserDefaults] boolForKey:@""KEY]; } \
@@ -45,6 +47,56 @@ static SPPreferences *sPreferences = nil;
     return sPreferences;
 }
 
+#pragma mark - Class methods
+
++ (NSString *)titleForAutohidingBehavior:(SPAutohidingBehavior)behavior {
+    switch (behavior) {
+        case SPAutohidingBehaviorNone:
+            return @"None";
+            break;
+            
+        case SPAutohidingBehaviorConservative:
+            return @"Conservative";
+            break;
+            
+        case SPAutohidingBehaviorAggressive:
+            return @"Aggressive";
+            break;
+            
+        case SPAutohidingBehaviorCustom:
+            return @"Custom";
+            break;
+            
+        default:
+            return @"";
+            break;
+    }
+}
+
++ (NSString *)explanationForAutohidingBehavior:(SPAutohidingBehavior)behavior {
+    switch (behavior) {
+        case SPAutohidingBehaviorNone:
+            return @"Don't hide any panels (default Xcode behavior)";
+            break;
+            
+        case SPAutohidingBehaviorConservative:
+            return @"Hide debug and utilities areas (default plugin behavior)";
+            break;
+            
+        case SPAutohidingBehaviorAggressive:
+            return @"Hide navigator, debug, and utilities areas (good for small screens)";
+            break;
+            
+        case SPAutohidingBehaviorCustom:
+            return @"Custom preferences";
+            break;
+            
+        default:
+            return @"";
+            break;
+    }
+}
+
 #pragma mark - Object lifecycle
 
 - (instancetype)init {
@@ -55,6 +107,12 @@ static SPPreferences *sPreferences = nil;
 }
 
 #pragma mark - Getters & setters
+
+- (SPAutohidingBehavior)autohidingBehavior { return [[NSUserDefaults standardUserDefaults] integerForKey:kAutohidingBehaviorUserDefaultsKey]; }
+- (void)setAutohidingBehavior:(SPAutohidingBehavior)autohidingBehavior {
+    [[NSUserDefaults standardUserDefaults] setInteger:autohidingBehavior forKey:kAutohidingBehaviorUserDefaultsKey];
+    [self loadPropertiesForAutohidingBehavior:autohidingBehavior];
+}
 
 BOOL_PROPERTY(hideDebuggerWhenTypingBegins, kHideDebuggerWhenTypingBeginsUserDefaultsKey, setHideDebuggerWhenTypingBegins)
 BOOL_PROPERTY(dontHideDebuggerWhileDebuggingWhenTypingBegins, kDontHideDebuggerWhileDebuggingWhenTypingBeginsUserDefaultsKey, setDontHideDebuggerWhileDebuggingWhenTypingBegins)
@@ -75,33 +133,88 @@ BOOL_PROPERTY(showUtilitiesWhenOpeningInterfaceFile, kShowUtilitiesWhenOpeningIn
 #pragma mark - Loading and restoring
 
 - (void)loadProperties {
-    [self loadPropertiesForceDefaults:NO xcodeBehavior:NO];
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:kAutohidingBehaviorUserDefaultsKey]) {
+        self.autohidingBehavior = SPAutohidingBehaviorConservative; // default to Conservative auto-hiding behavior
+    } else {
+        [self loadPropertiesForAutohidingBehavior:self.autohidingBehavior];
+    }
 }
 
-- (void)loadPropertiesForceDefaults:(BOOL)forceDefaults xcodeBehavior:(BOOL)xcodeBehavior {
-    LOAD_PROPERTY(hideDebuggerWhenTypingBegins, kHideDebuggerWhenTypingBeginsUserDefaultsKey, (YES && !xcodeBehavior), forceDefaults);
-	LOAD_PROPERTY(dontHideDebuggerWhileDebuggingWhenTypingBegins, kDontHideDebuggerWhileDebuggingWhenTypingBeginsUserDefaultsKey, (YES && !xcodeBehavior), forceDefaults);
-	LOAD_PROPERTY(hideNavigatorWhenTypingBegins, kHideNavigatorWhenTypingBeginsUserDefaultsKey, (NO && !xcodeBehavior), forceDefaults);
-	LOAD_PROPERTY(hideUtilitiesWhenTypingBegins, kHideUtilitiesWhenTypingBeginsUserDefaultsKey, (YES && !xcodeBehavior), forceDefaults);
-    
-    LOAD_PROPERTY(restoreEditorModeWhenOpeningTextDocument, kRestoreEditorModeWhenOpeningTextDocumentUserDefaultsKey, (YES && !xcodeBehavior), forceDefaults);
-    LOAD_PROPERTY(restoreDebuggerWhenOpeningTextDocument, kRestoreDebuggerWhenOpeningTextDocumentUserDefaultsKey, (NO && !xcodeBehavior), forceDefaults);
-	LOAD_PROPERTY(hideNavigatorWhenOpeningTextDocument, kHideNavigatorWhenOpeningTextDocumentUserDefaultsKey, (NO && !xcodeBehavior), forceDefaults);
-	LOAD_PROPERTY(hideUtilitiesWhenOpeningTextDocument, kHideUtilitiesWhenOpeningTextDocumentUserDefaultsKey, (YES && !xcodeBehavior), forceDefaults);
-    
-    LOAD_PROPERTY(switchToStandardEditorModeWhenOpeningInterfaceFile, kSwitchToStandardEditorModeWhenOpeningInterfaceFileUserDefaultsKey, (YES && !xcodeBehavior), forceDefaults);
-    LOAD_PROPERTY(hideDebuggerWhenOpeningInterfaceFile, kHideDebuggerWhenOpeningInterfaceFileUserDefaultsKey, (YES && !xcodeBehavior), forceDefaults);
-	LOAD_PROPERTY(dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFile, kDontHideDebuggerWhileDebuggingWhenOpeningInterfaceFileUserDefaultsKey, (NO && !xcodeBehavior), forceDefaults);
-	LOAD_PROPERTY(hideNavigatorWhenOpeningInterfaceFile, kHideNavigatorWhenOpeningInterfaceFileUserDefaultsKey, (NO && !xcodeBehavior), forceDefaults);
-    LOAD_PROPERTY(showUtilitiesWhenOpeningInterfaceFile, kShowUtilitiesWhenOpeningInterfaceFileUserDefaultsKey, (YES && !xcodeBehavior), forceDefaults);
-}
-
-- (void)restoreDefaults {
-    [self loadPropertiesForceDefaults:YES xcodeBehavior:NO];
-}
-
-- (void)restoreXcodeBehavior {
-    [self loadPropertiesForceDefaults:YES xcodeBehavior:YES];
+- (void)loadPropertiesForAutohidingBehavior:(SPAutohidingBehavior)behavior {
+    switch (behavior) {
+        case SPAutohidingBehaviorNone:
+            self.hideDebuggerWhenTypingBegins = NO;
+            self.dontHideDebuggerWhileDebuggingWhenTypingBegins = NO;
+            self.hideNavigatorWhenTypingBegins = NO;
+            self.hideUtilitiesWhenTypingBegins = NO;
+            
+            self.restoreEditorModeWhenOpeningTextDocument = NO;
+            self.restoreDebuggerWhenOpeningTextDocument = NO;
+            self.hideNavigatorWhenOpeningTextDocument = NO;
+            self.hideUtilitiesWhenOpeningTextDocument = NO;
+            
+            self.switchToStandardEditorModeWhenOpeningInterfaceFile = NO;
+            self.hideDebuggerWhenOpeningInterfaceFile = NO;
+            self.dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFile = NO;
+            self.hideNavigatorWhenOpeningInterfaceFile = NO;
+            self.showUtilitiesWhenOpeningInterfaceFile = NO;
+            break;
+            
+        case SPAutohidingBehaviorConservative:
+            self.hideDebuggerWhenTypingBegins = YES;
+            self.dontHideDebuggerWhileDebuggingWhenTypingBegins = YES;
+            self.hideNavigatorWhenTypingBegins = NO;
+            self.hideUtilitiesWhenTypingBegins = YES;
+            
+            self.restoreEditorModeWhenOpeningTextDocument = YES;
+            self.restoreDebuggerWhenOpeningTextDocument = NO;
+            self.hideNavigatorWhenOpeningTextDocument = NO;
+            self.hideUtilitiesWhenOpeningTextDocument = YES;
+            
+            self.switchToStandardEditorModeWhenOpeningInterfaceFile = YES;
+            self.hideDebuggerWhenOpeningInterfaceFile = YES;
+            self.dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFile = NO;
+            self.hideNavigatorWhenOpeningInterfaceFile = NO;
+            self.showUtilitiesWhenOpeningInterfaceFile = YES;
+            break;
+            
+        case SPAutohidingBehaviorAggressive:
+            self.hideDebuggerWhenTypingBegins = YES;
+            self.dontHideDebuggerWhileDebuggingWhenTypingBegins = YES;
+            self.hideNavigatorWhenTypingBegins = YES;
+            self.hideUtilitiesWhenTypingBegins = YES;
+            
+            self.restoreEditorModeWhenOpeningTextDocument = YES;
+            self.restoreDebuggerWhenOpeningTextDocument = NO;
+            self.hideNavigatorWhenOpeningTextDocument = YES;
+            self.hideUtilitiesWhenOpeningTextDocument = YES;
+            
+            self.switchToStandardEditorModeWhenOpeningInterfaceFile = YES;
+            self.hideDebuggerWhenOpeningInterfaceFile = YES;
+            self.dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFile = NO;
+            self.hideNavigatorWhenOpeningInterfaceFile = YES;
+            self.showUtilitiesWhenOpeningInterfaceFile = YES;
+            break;
+            
+        default:
+            // otherwise, load defaults if necessary
+            LOAD_PROPERTY(hideDebuggerWhenTypingBegins, kHideDebuggerWhenTypingBeginsUserDefaultsKey, YES);
+            LOAD_PROPERTY(dontHideDebuggerWhileDebuggingWhenTypingBegins, kDontHideDebuggerWhileDebuggingWhenTypingBeginsUserDefaultsKey, YES);
+            LOAD_PROPERTY(hideNavigatorWhenTypingBegins, kHideNavigatorWhenTypingBeginsUserDefaultsKey, NO);
+            LOAD_PROPERTY(hideUtilitiesWhenTypingBegins, kHideUtilitiesWhenTypingBeginsUserDefaultsKey, YES);
+            
+            LOAD_PROPERTY(restoreEditorModeWhenOpeningTextDocument, kRestoreEditorModeWhenOpeningTextDocumentUserDefaultsKey, YES);
+            LOAD_PROPERTY(restoreDebuggerWhenOpeningTextDocument, kRestoreDebuggerWhenOpeningTextDocumentUserDefaultsKey, NO);
+            LOAD_PROPERTY(hideNavigatorWhenOpeningTextDocument, kHideNavigatorWhenOpeningTextDocumentUserDefaultsKey, NO);
+            LOAD_PROPERTY(hideUtilitiesWhenOpeningTextDocument, kHideUtilitiesWhenOpeningTextDocumentUserDefaultsKey, YES);
+            
+            LOAD_PROPERTY(switchToStandardEditorModeWhenOpeningInterfaceFile, kSwitchToStandardEditorModeWhenOpeningInterfaceFileUserDefaultsKey, YES);
+            LOAD_PROPERTY(hideDebuggerWhenOpeningInterfaceFile, kHideDebuggerWhenOpeningInterfaceFileUserDefaultsKey, YES);
+            LOAD_PROPERTY(dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFile, kDontHideDebuggerWhileDebuggingWhenOpeningInterfaceFileUserDefaultsKey, NO);
+            LOAD_PROPERTY(hideNavigatorWhenOpeningInterfaceFile, kHideNavigatorWhenOpeningInterfaceFileUserDefaultsKey, NO);
+            LOAD_PROPERTY(showUtilitiesWhenOpeningInterfaceFile, kShowUtilitiesWhenOpeningInterfaceFileUserDefaultsKey, YES);
+            break;
+    }
 }
 
 @end
