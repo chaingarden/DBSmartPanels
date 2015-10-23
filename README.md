@@ -8,16 +8,19 @@ DBSmartPanels is a simple panel manager plugin for Xcode 6 which optimizes scree
 
 There are currently 3 events with which the plugin is concerned, with multiple behavior tweaks for each:
 * <b>When you begin typing in a text document...</b>
-    * <i>Hide debugger</i>: hides the bottom panel
-    * <i>Hide utilities</i>: hides the right-hand panel
+    * <i>Hide debug area</i>: hides the bottom panel
+    * <i>Hide navigator area</i>: hides the left-hand panel
+    * <i>Hide utilities area</i>: hides the right-hand panel
 * <b>When you open a text document...</b>
     * <i>Restore editor mode</i>: if applicable, switches you back to whichever editor mode you were in (Standard, Assistant, or Version Editor) before you opened an interface file
-    * <i>Restore debugger state</i>: if applicable, un-hides the debugger if it was visible before you opened an interface file
-    * <i>Hide utilities</i>: hides the right-hand panel
+    * <i>Restore debug area state</i>: if applicable, un-hides the debugger if it was visible before you opened an interface file
+    * <i>Hide navigator area</i>: hides the left-hand panel
+    * <i>Hide utilities area</i>: hides the right-hand panel
 * <b>When you open an interface file...</b> (XIB or Storyboard)
     * <i>Switch to standard editor</i>: the Assistant Editor takes up valuable screen real estate, so hide it
-    * <i>Hide debugger</i>: hides the bottom panel
-    * <i>Show utilities</i>: shows the right-hand panel, since you generally tweak values in here when dealing with UI elements
+    * <i>Hide debug area</i>: hides the bottom panel
+    * <i>Hide navigator area</i>: hides the left-hand panel
+    * <i>Show utilities area</i>: shows the right-hand panel, since you generally tweak values in here when dealing with UI elements
 
 Configuration
 -------------
@@ -25,6 +28,8 @@ Configuration
 Since one size does not necessarily fit all, the plugin installs a new option in the Xcode menu, from which you can tweak the behavior to whatever works best for you:
 
 <img src="https://raw.githubusercontent.com/chaingarden/DBSmartPanels/master/Screenshots/DemoScreenshot.png" />
+
+You can choose one of the preset schemes (Conservative or Aggressive, depending on whether you want the navigator area to auto-hide), or tweak the options individually.
 
 Installation
 ------------
