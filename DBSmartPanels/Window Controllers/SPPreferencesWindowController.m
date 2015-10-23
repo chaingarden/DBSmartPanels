@@ -60,10 +60,7 @@
 - (void)updateUI {
     SPPreferences *sharedPrefs = [SPPreferences sharedPreferences];
     
-    if (sharedPrefs.autohidingBehavior < self.behaviorPopUpButton.numberOfItems) {
-        [self.behaviorPopUpButton selectItemAtIndex:sharedPrefs.autohidingBehavior];
-    }
-    [self updateAutohidingBehaviorExplanation];
+    [self updateAutohidingBehaviorUI];
     
     self.hideDebuggerWhenTypingBeginsButton.state = sharedPrefs.hideDebuggerWhenTypingBegins ? NSOnState : NSOffState;
 	self.dontHideDebuggerWhileDebuggingWhenTypingBeginsButton.state = sharedPrefs.dontHideDebuggerWhileDebuggingWhenTypingBegins ? NSOnState : NSOffState;
@@ -85,8 +82,12 @@
 	self.dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFileButton.enabled = sharedPrefs.hideDebuggerWhenOpeningInterfaceFile;
 }
 
-- (void)updateAutohidingBehaviorExplanation {
+- (void)updateAutohidingBehaviorUI {
     SPPreferences *sharedPrefs = [SPPreferences sharedPreferences];
+    
+    if (sharedPrefs.autohidingBehavior < self.behaviorPopUpButton.numberOfItems) {
+        [self.behaviorPopUpButton selectItemAtIndex:sharedPrefs.autohidingBehavior];
+    }
     
     [self.behaviorExplanationTextField setStringValue:[SPPreferences explanationForAutohidingBehavior:sharedPrefs.autohidingBehavior]];
 }
@@ -103,70 +104,91 @@
 - (IBAction)hideDebuggerWhenTypingBeginsButtonPressed:(id)sender {
     if (![sender isKindOfClass:[NSButton class]]) return;
     [SPPreferences sharedPreferences].hideDebuggerWhenTypingBegins = (((NSButton *)sender).state == NSOnState);
-	
+    [self switchToCustomAutohidingBehavior];
+    
 	self.dontHideDebuggerWhileDebuggingWhenTypingBeginsButton.enabled = [SPPreferences sharedPreferences].hideDebuggerWhenTypingBegins;
 }
 
 - (IBAction)dontHideDebuggerWhileDebuggingWhenTypingBeginsButtonPressed:(id)sender {
 	if (![sender isKindOfClass:[NSButton class]]) return;
-	[SPPreferences sharedPreferences].dontHideDebuggerWhileDebuggingWhenTypingBegins = (((NSButton *)sender).state == NSOnState);
+    [SPPreferences sharedPreferences].dontHideDebuggerWhileDebuggingWhenTypingBegins = (((NSButton *)sender).state == NSOnState);
+    [self switchToCustomAutohidingBehavior];
 }
 
 - (IBAction)hideNavigatorWhenTypingBeginsButtonPressed:(id)sender {
 	if (![sender isKindOfClass:[NSButton class]]) return;
-	[SPPreferences sharedPreferences].hideNavigatorWhenTypingBegins = (((NSButton *)sender).state == NSOnState);
+    [SPPreferences sharedPreferences].hideNavigatorWhenTypingBegins = (((NSButton *)sender).state == NSOnState);
+    [self switchToCustomAutohidingBehavior];
 }
 
 - (IBAction)hideUtilitiesWhenTypingBeginsButtonPressed:(id)sender {
     if (![sender isKindOfClass:[NSButton class]]) return;
     [SPPreferences sharedPreferences].hideUtilitiesWhenTypingBegins = (((NSButton *)sender).state == NSOnState);
+    [self switchToCustomAutohidingBehavior];
 }
 
 - (IBAction)restoreEditorModeWhenOpeningTextDocumentButtonPressed:(id)sender {
     if (![sender isKindOfClass:[NSButton class]]) return;
     [SPPreferences sharedPreferences].restoreEditorModeWhenOpeningTextDocument = (((NSButton *)sender).state == NSOnState);
+    [self switchToCustomAutohidingBehavior];
 }
 
 - (IBAction)restoreDebuggerWhenOpeningTextDocumentButtonPressed:(id)sender {
     if (![sender isKindOfClass:[NSButton class]]) return;
     [SPPreferences sharedPreferences].restoreDebuggerWhenOpeningTextDocument = (((NSButton *)sender).state == NSOnState);
+    [self switchToCustomAutohidingBehavior];
 }
 
 - (IBAction)hideNavigatorWhenOpeningTextDocumentButtonPressed:(id)sender {
 	if (![sender isKindOfClass:[NSButton class]]) return;
-	[SPPreferences sharedPreferences].hideNavigatorWhenOpeningTextDocument = (((NSButton *)sender).state == NSOnState);
+    [SPPreferences sharedPreferences].hideNavigatorWhenOpeningTextDocument = (((NSButton *)sender).state == NSOnState);
+    [self switchToCustomAutohidingBehavior];
 }
 
 - (IBAction)hideUtilitiesWhenOpeningTextDocumentButtonPressed:(id)sender {
     if (![sender isKindOfClass:[NSButton class]]) return;
     [SPPreferences sharedPreferences].hideUtilitiesWhenOpeningTextDocument = (((NSButton *)sender).state == NSOnState);
+    [self switchToCustomAutohidingBehavior];
 }
 
 - (IBAction)switchToStandardEditorModeWhenOpeningInterfaceFileButtonPressed:(id)sender {
     if (![sender isKindOfClass:[NSButton class]]) return;
     [SPPreferences sharedPreferences].switchToStandardEditorModeWhenOpeningInterfaceFile = (((NSButton *)sender).state == NSOnState);
+    [self switchToCustomAutohidingBehavior];
 }
 
 - (IBAction)hideDebuggerWhenOpeningInterfaceFileButtonPressed:(id)sender {
     if (![sender isKindOfClass:[NSButton class]]) return;
     [SPPreferences sharedPreferences].hideDebuggerWhenOpeningInterfaceFile = (((NSButton *)sender).state == NSOnState);
+    [self switchToCustomAutohidingBehavior];
 	
 	self.dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFileButton.enabled = [SPPreferences sharedPreferences].hideDebuggerWhenOpeningInterfaceFile;
 }
 
 - (IBAction)dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFileButtonPressed:(id)sender {
 	if (![sender isKindOfClass:[NSButton class]]) return;
-	[SPPreferences sharedPreferences].dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFile = (((NSButton *)sender).state == NSOnState);
+    [SPPreferences sharedPreferences].dontHideDebuggerWhileDebuggingWhenOpeningInterfaceFile = (((NSButton *)sender).state == NSOnState);
+    [self switchToCustomAutohidingBehavior];
 }
 
 - (IBAction)hideNavigatorWhenOpeningInterfaceFileButtonPressed:(id)sender {
 	if (![sender isKindOfClass:[NSButton class]]) return;
-	[SPPreferences sharedPreferences].hideNavigatorWhenOpeningInterfaceFile = (((NSButton *)sender).state == NSOnState);
+    [SPPreferences sharedPreferences].hideNavigatorWhenOpeningInterfaceFile = (((NSButton *)sender).state == NSOnState);
+    [self switchToCustomAutohidingBehavior];
 }
 
 - (IBAction)showUtilitiesWhenOpeningInterfaceFileButtonPressed:(id)sender {
     if (![sender isKindOfClass:[NSButton class]]) return;
     [SPPreferences sharedPreferences].showUtilitiesWhenOpeningInterfaceFile = (((NSButton *)sender).state == NSOnState);
+    [self switchToCustomAutohidingBehavior];
+}
+
+#pragma mark - Helpers
+
+- (void)switchToCustomAutohidingBehavior {
+    [SPPreferences sharedPreferences].autohidingBehavior = SPAutohidingBehaviorCustom;
+    
+    [self updateAutohidingBehaviorUI];
 }
 
 @end
