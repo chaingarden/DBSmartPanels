@@ -176,7 +176,7 @@
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Fx-8r-cbf">
                         <rect key="frame" x="246" y="355" width="192" height="18"/>
                         <animations/>
-                        <buttonCell key="cell" type="check" title="Hide navigator" bezelStyle="regularSquare" imagePosition="left" inset="2" id="2bR-1A-KpG">
+                        <buttonCell key="cell" type="check" title="Hide navigator area" bezelStyle="regularSquare" imagePosition="left" inset="2" id="2bR-1A-KpG">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -187,7 +187,7 @@
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SKY-fH-t46">
                         <rect key="frame" x="246" y="257" width="189" height="18"/>
                         <animations/>
-                        <buttonCell key="cell" type="check" title="Hide navigator" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Xb3-rt-adg">
+                        <buttonCell key="cell" type="check" title="Hide navigator area" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Xb3-rt-adg">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -198,7 +198,7 @@
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mjj-z8-ua8">
                         <rect key="frame" x="246" y="139" width="189" height="18"/>
                         <animations/>
-                        <buttonCell key="cell" type="check" title="Hide navigator" bezelStyle="regularSquare" imagePosition="left" inset="2" id="5WB-mQ-Jwu">
+                        <buttonCell key="cell" type="check" title="Hide navigator area" bezelStyle="regularSquare" imagePosition="left" inset="2" id="5WB-mQ-Jwu">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
