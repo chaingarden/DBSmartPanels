@@ -1,6 +1,11 @@
 DBSmartPanels
 =============
 
+Update 9/25/2016
+----------------
+
+As of Xcode 8, third party plugins of this nature are no longer supported. This plugin will no longer be updated, unless/until Apple opens up support for it again. Discussion around this can be found here: https://github.com/alcatraz/Alcatraz/issues/475
+
 About
 -----
 
